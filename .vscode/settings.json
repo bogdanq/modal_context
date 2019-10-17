@@ -1,0 +1,16 @@
+{
+  "workbench.colorTheme": "CodeSandbox",
+  "editor.fontFamily": "'Iosevka Term SS09', monospace",
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "all",
+  "prettier.printWidth": 80,
+  "prettier.disableLanguages": ["scss"],
+  "editor.formatOnSave": true,
+  "window.zoomLevel": 0,
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "terminal.integrated.rendererType": "dom",
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false
+}

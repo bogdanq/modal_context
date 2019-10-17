@@ -1,0 +1,36 @@
+{
+  "name": "modal",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "@types/node": "12.6.2",
+    "@types/react-dom": "^16.9.2",
+    "@types/react-modal": "3.8.2",
+    "@types/styled-components": "4.1.18",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-modal": "3.8.1",
+    "react-onclickoutside": "6.8.0",
+    "react-scripts": "2.1.8",
+    "react-transition-group": "4.3.0",
+    "styled-components": "4.3.2",
+    "typescript": "3.2.4"
+  },
+  "devDependencies": {
+    "typescript": "3.3.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
