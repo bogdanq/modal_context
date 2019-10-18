@@ -1,6 +1,6 @@
 {
   "workbench.colorTheme": "CodeSandbox",
-  "editor.fontFamily": "'Iosevka Term SS09', monospace",
+  "editor.fontFamily": "'Iosevka Term SS09', 'Iosevka SS09',  monospace",
   "prettier.tabWidth": 2,
   "prettier.trailingComma": "all",
   "prettier.printWidth": 80,

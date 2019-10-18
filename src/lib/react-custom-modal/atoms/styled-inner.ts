@@ -25,16 +25,16 @@ type Props = {
   customStyle?: object
 }
 
-export const StyledInner = styled.div<Props>`
+export const ModalInner = styled.div<Props>`
   background: #fff;
   padding: 20px 30px;
   text-align: left;
   max-width: 650px;
-  margin: 40px auto;
   position: relative;
   border: 1px solid transparent;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   opacity: 0;
+  margin: 0 auto;
   ${({ customStyle }: any) => customStyle}
   ${getStyle('type', modalType)}
 `

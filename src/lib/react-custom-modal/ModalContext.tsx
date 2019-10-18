@@ -1,52 +1,35 @@
-import React, { useReducer, ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 
 type RenderNodeModal = (arg: { hideModal: () => void }) => ReactNode
 
 export type ContextModalType = {
-  state: {
-    node: RenderNodeModal
-  }
   showModal: (renderNodeModal: RenderNodeModal) => void
-  hideModal: () => void
+  nodeModal: any
+  pop: () => void
+  stack: Array<any>
 }
 
-const ModalContext = React.createContext<ContextModalType>(undefined as any)
+const ModalContext = React.createContext<ContextModalType>({
+  showModal: () => null,
+  nodeModal: null,
+  pop: () => null,
+  stack: [],
+})
 
 type Props = {
   children: ReactNode
 }
 
-type Reducer = {
-  renderNodeModal: RenderNodeModal
-}
-
-type State = {
-  node: RenderNodeModal
-}
-
-const reducer = (state: State, { renderNodeModal }: Reducer) => {
-  return { ...state, node: renderNodeModal }
-}
-
-const ModalProvider = ({ children }: Props): any => {
-  const showModal = (renderNodeModal: RenderNodeModal) => {
-    return dispatch({ renderNodeModal })
-  }
-
-  const hideModal = () => {
-    return dispatch({ ...state, renderNodeModal: () => null })
-  }
-
-  const [state, dispatch] = useReducer(reducer, {
-    node: () => null,
-  })
+const ModalProvider = ({ children }: Props) => {
+  const { pop, push, last, stack } = useStack()
 
   return (
     <ModalContext.Provider
       value={{
-        state,
-        showModal,
-        hideModal,
+        showModal: push,
+        nodeModal: last,
+        pop,
+        stack,
       }}
     >
       {children}
@@ -57,3 +40,25 @@ const ModalProvider = ({ children }: Props): any => {
 const ModalConsumer = ModalContext.Consumer
 
 export { ModalProvider, ModalContext, ModalConsumer }
+
+const useStack = () => {
+  const [stack, setStack] = useState<Array<any>>([])
+
+  const push = (data: any) => setStack(prev => [...prev, data])
+
+  const pop = () =>
+    setStack((prev: Array<ReactNode>) => {
+      const last = prev.pop()
+      return prev.filter(item => item !== last)
+    })
+
+  const last: (arg: { hideModal: () => void }) => ReactNode =
+    stack[stack.length - 1]
+
+  return {
+    last,
+    push,
+    pop,
+    stack,
+  }
+}

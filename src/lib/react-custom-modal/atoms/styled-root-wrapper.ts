@@ -14,4 +14,6 @@ export const StyledRootWrapper = styled.div`
   background-color: rgba(11, 11, 11, 0.75);
   opacity: 0;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
 `

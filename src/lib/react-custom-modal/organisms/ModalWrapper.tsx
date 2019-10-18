@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import ReactModal from 'react-modal'
-import { ModalType, StyledWrapper, StyledRootWrapper, StyledInner } from '../'
+import { ModalType, StyledWrapper, StyledRootWrapper, ModalInner } from '../'
+import { GlobalModalStyle, Animation } from '../atoms'
 
 type Props = {
   onRequestClose: () => void
@@ -9,8 +10,9 @@ type Props = {
   visible?: boolean
   type?: keyof ModalType
   modalType?: object
-  closeButton?: (close: any) => ReactNode
+  closeButton?: (close: () => void) => ReactNode
   style?: any
+  animation?: Animation
 }
 
 export const ModalWrapper = ({
@@ -20,28 +22,32 @@ export const ModalWrapper = ({
   modalType,
   closeButton,
   style,
+  animation,
 }: Props) => {
   return (
-    <ReactModal isOpen onRequestClose={onRequestClose} ariaHideApp={false}>
-      <StyledRootWrapper onClick={onRequestClose}>
-        <StyledWrapper>
-          <StyledInner
-            customStyle={style}
-            customTypes={modalType}
-            type={type}
-            onClick={(e: React.MouseEvent) => e.stopPropagation()}
-          >
-            <>
-              {children}
-              {closeButton ? (
-                closeButton(onRequestClose)
-              ) : (
-                <button onClick={onRequestClose}>Close</button>
-              )}
-            </>
-          </StyledInner>
-        </StyledWrapper>
-      </StyledRootWrapper>
-    </ReactModal>
+    <>
+      <ReactModal isOpen onRequestClose={onRequestClose} ariaHideApp={false}>
+        <StyledRootWrapper onClick={onRequestClose}>
+          <StyledWrapper>
+            <ModalInner
+              customStyle={style}
+              customTypes={modalType}
+              type={type}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            >
+              <>
+                {children}
+                {closeButton ? (
+                  closeButton(onRequestClose)
+                ) : (
+                  <button onClick={onRequestClose}>Close</button>
+                )}
+              </>
+            </ModalInner>
+          </StyledWrapper>
+        </StyledRootWrapper>
+      </ReactModal>
+      <GlobalModalStyle animation={animation} />
+    </>
   )
 }

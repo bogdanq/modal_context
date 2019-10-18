@@ -1,55 +1,27 @@
 import { css, createGlobalStyle } from 'styled-components'
-import { StyledRootWrapper, StyledInner } from './lib/react-custom-modal'
+import { ModalInner } from './lib/react-custom-modal'
 
-export const ModalStyled = css`
+export const CustomModalAnimate = css`
   /* style for active modal */
-  ${StyledInner} {
+  ${ModalInner} {
     transition: all 0.4s;
-    transform: translateX(-100px);
+    transform: rotate(180deg);
   }
   /* style for ReactModal */
   .ReactModal {
-    &__Body {
-      &--open {
-        overflow: hidden;
-      }
-    }
-
-    /* style for ReactModal__content 
-    kill through important!!! */
     &__Content {
-      border: none !important;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1;
       &--after-open {
-        ${StyledInner} {
-          opacity: 1;
-          transform: translate(0);
+        ${ModalInner} {
+          transform: rotate(0);
         }
       }
       &--before-close {
-        ${StyledInner} {
-          transform: translateX(100px);
-          opacity: 0;
-        }
-      }
-    }
-
-    &__Overlay {
-      &--after-open {
-        ${StyledRootWrapper} {
-          opacity: 1;
-        }
-      }
-      &--before-close {
-        ${StyledRootWrapper} {
-          opacity: 0;
+        ${ModalInner} {
+          transform: rotate(180deg);
         }
       }
     }
   }
 `
 
-export const GlobalModalStyles = createGlobalStyle`${ModalStyled}`
+export const CustomModalAnimateGlobal = createGlobalStyle`${CustomModalAnimate}`

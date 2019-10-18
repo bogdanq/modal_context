@@ -1,7 +1,8 @@
-import { ModalType } from './atoms'
+import { ModalType, Animation } from './atoms'
 
 type PropsName = {
   type: keyof ModalType
+  animation: Animation
 }
 
 export const getStyle = (propsName: keyof PropsName, styles: any) => (
