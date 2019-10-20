@@ -21,6 +21,13 @@ import styled from 'styled-components'
 
 const App = () => {
   const { showModal } = React.useContext<ContextModalType>(ModalContext)
+  // React.useEffect(() => {
+  //   pushArray(({ hideModal }: any) => [
+  //     <DefaultModal onRequestClose={hideModal} />,
+  //     <ModalForTypes onRequestClose={hideModal} type='danger' />,
+  //     <DefaultModal onRequestClose={hideModal} />,
+  //   ])
+  // }, [])
 
   return (
     <>
