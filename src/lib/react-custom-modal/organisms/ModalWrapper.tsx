@@ -1,19 +1,19 @@
 import React, { ReactNode } from 'react'
 import ReactDOM from 'react-dom'
-import ReactModal from 'react-modal'
 import { ModalType, StyledWrapper, StyledRootWrapper, ModalInner } from '../'
 import { GlobalModalStyle, Animation } from '../atoms'
+import { ModalContext, ContextModalType } from '../ModalContext'
+import { FlattenSimpleInterpolation } from 'styled-components'
 
 type Props = {
   onRequestClose: () => void
   children: ReactNode
-  hasError?: boolean
-  visible?: boolean
   type?: keyof ModalType
-  modalType?: object
   closeButton?: (close: () => void) => ReactNode
-  style?: any
-  animation?: Animation
+  modalType?: ModalType
+  style?: FlattenSimpleInterpolation
+  animationName?: Animation
+  customAnimated?: any
   nodeModal?: any
 }
 
@@ -24,60 +24,48 @@ export const ModalWrapper = ({
   modalType,
   closeButton,
   style,
-  animation,
-  nodeModal,
+  animationName,
+  customAnimated,
 }: Props) => {
+  const { stack, shadowStack } = React.useContext<ContextModalType>(
+    ModalContext,
+  )
+
+  const isAnimated = stack.length === shadowStack.length
+
   return (
     <>
-      <CustomModal isOpen={Boolean(nodeModal)} onRequestClose={onRequestClose}>
+      <ModalPortal>
         <StyledRootWrapper onClick={onRequestClose}>
           <StyledWrapper>
             <ModalInner
               customStyle={style}
               customTypes={modalType}
+              isAnimated={isAnimated}
               type={type}
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
-              <>
-                {children}
-                {closeButton ? (
-                  closeButton(onRequestClose)
-                ) : (
-                  <button onClick={onRequestClose}>Close</button>
-                )}
-              </>
+              {children}
+              {closeButton ? (
+                closeButton(onRequestClose)
+              ) : (
+                <button onClick={onRequestClose}>Close</button>
+              )}
             </ModalInner>
           </StyledWrapper>
         </StyledRootWrapper>
-      </CustomModal>
-      <GlobalModalStyle animation={animation} />
+      </ModalPortal>
+      <GlobalModalStyle
+        animationName={animationName}
+        isAnimated={isAnimated}
+        customAnimated={customAnimated}
+      />
     </>
   )
 }
 
-export const CustomModal = ({ children, isOpen }: any) => {
+export const ModalPortal = ({ children }: { children: React.ReactElement }) => {
   const rootElement = document.querySelector('#modal')
-  const Parent =
-    rootElement &&
-    ReactDOM.createPortal(
-      <div
-        className={` ${
-          isOpen
-            ? 'ReactModal__Overlay ReactModal__Overlay--after-open'
-            : 'ReactModal__Overlay--before-close'
-        }`}
-      >
-        <div
-          className={`${
-            isOpen
-              ? 'ReactModal__Content ReactModal__Content--after-open'
-              : 'ReactModal__Content--before-close'
-          }`}
-        >
-          {children}
-        </div>
-      </div>,
-      rootElement,
-    )
-  return Parent
+
+  return rootElement ? ReactDOM.createPortal(children, rootElement) : null
 }

@@ -28,7 +28,10 @@ export const ModalForChildren = ({ onRequestClose }: Props) => {
         <button
           onClick={() => {
             showModal(({ hideModal }) => (
-              <ModalForCustomAnimate onRequestClose={hideModal} />
+              <ModalForCustomAnimate
+                onRequestClose={hideModal}
+                customAnimationName='zoom'
+              />
             ))
           }}
         >

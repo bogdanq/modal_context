@@ -1,110 +1,243 @@
 import React from 'react'
-import { css, createGlobalStyle } from 'styled-components'
+import { css, createGlobalStyle, keyframes } from 'styled-components'
 import { getStyle } from '../styled-components-layout'
-import { StyledRootWrapper, ModalInner } from '../'
+import { ModalInner } from '../'
 
-export type Animation = 'scale' | 'translate'
+export type Animation =
+  | 'scale'
+  | 'translate'
+  | 'rotate'
+  | 'jackIn'
+  | 'rubber'
+  | 'swing'
+  | 'rollin'
 
 type Props = {
-  animation?: Animation
+  animationName?: Animation
+  isAnimated?: boolean
+  customAnimated?: any
 }
 
-export const GlobalModalStyle = ({ animation }: Props) => {
-  const CustomStyles = css`
-    .ReactModal {
-      &__Body {
-        &--open {
-          overflow: hidden;
-        }
-      }
-      &__Content {
-        border: none !important;
-        background: transparent !important;
-        &--after-open {
-          ${ModalInner} {
-            opacity: 1;
-          }
-        }
-        &--before-close {
-          ${ModalInner} {
-            opacity: 0;
-          }
-        }
-      }
-      &__Overlay {
-        &--after-open {
-          ${StyledRootWrapper} {
-            opacity: 1;
-          }
-        }
-        &--before-close {
-          ${StyledRootWrapper} {
-            opacity: 0;
-          }
-        }
-      }
-    }
-  `
-
+export const GlobalModalStyle = ({
+  animationName,
+  isAnimated,
+  customAnimated,
+}: Props) => {
   const animationStyle = {
-    scale: css`
+    scale: css<Props>`
       ${ModalInner} {
-        transform: scale(0.7);
-      }
-      .ReactModal {
-        &__Content {
-          &--after-open {
-            ${ModalInner} {
-              transform: scale(1);
-            }
-          }
-          &--before-close {
-            ${ModalInner} {
-              transform: scale(0.7);
-            }
-          }
-        }
+        animation-duration: 0.5s;
+        animation-name: ${({ isAnimated }) =>
+          isAnimated ? scaleIn : scaleOut};
       }
     `,
-    translate: css`
+    translate: css<Props>`
       ${ModalInner} {
-        transform: translateX(-100px);
+        animation-duration: 0.5s;
+        animation-name: ${({ isAnimated }: any) =>
+          isAnimated ? translateIn : translateOut};
       }
-      .ReactModal {
-        &__Content {
-          &--after-open {
-            ${ModalInner} {
-              transform: translateX(0);
-            }
-          }
-          &--before-close {
-            ${ModalInner} {
-              transform: translateX(-100px);
-            }
-          }
-        }
+    `,
+    rotate: css<Props>`
+      ${ModalInner} {
+        animation-duration: 0.5s;
+        animation-name: ${({ isAnimated }: any) =>
+          isAnimated ? rotateIn : rotateOut};
+      }
+    `,
+    jackIn: css<Props>`
+      ${ModalInner} {
+        animation-duration: 0.5s;
+        animation-name: ${({ isAnimated }: any) =>
+          isAnimated ? jackIn : scaleOut};
+      }
+    `,
+    rubber: css<Props>`
+      ${ModalInner} {
+        animation-duration: 0.5s;
+        animation-name: ${({ isAnimated }: any) =>
+          isAnimated ? rubberIn : scaleOut};
+      }
+    `,
+    swing: css<Props>`
+      ${ModalInner} {
+        animation-duration: 0.5s;
+        animation-name: ${({ isAnimated }: any) =>
+          isAnimated ? swingIn : scaleOut};
+      }
+    `,
+    rollin: css<Props>`
+      ${ModalInner} {
+        animation-duration: 0.5s;
+        animation-name: ${({ isAnimated }: any) =>
+          isAnimated ? rollinIn : scaleOut};
       }
     `,
   }
 
-  const SecondModalStyled = css`
-    ${ModalInner} {
-      transition: all 0.4s;
-      ${getStyle('animation', animationStyle)}
-    }
-    ${getStyle('animation', animationStyle)}
+  const GlobalModalStyled = css<Props>`
+    ${getStyle('animationName', animationStyle)}
+    ${({ customAnimated }) => customAnimated}
   `
 
-  const SecondModalStyles = createGlobalStyle<{
-    animation?: Animation
-  }>`${SecondModalStyled}`
-
-  const GlobalModalStyles = createGlobalStyle`${CustomStyles}`
+  const GlobalModalStyles = createGlobalStyle<{
+    animationName?: Animation
+    isAnimated?: boolean
+    customAnimated?: any
+  }>`${GlobalModalStyled}`
 
   return (
     <>
-      <GlobalModalStyles />
-      <SecondModalStyles animation={animation} />
+      <GlobalModalStyles
+        animationName={animationName}
+        isAnimated={isAnimated}
+        customAnimated={customAnimated}
+      />
     </>
   )
 }
+
+export const scaleIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.5)
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1)
+  }
+  80% {
+    opacity: 1;
+    transform: scale(0.8)
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1)
+  }
+`
+
+export const scaleOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: scale(1)
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(0.5)
+  }
+`
+
+export const translateIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(100px)
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0)
+  }
+`
+
+export const translateOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateX(0)
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px)
+  }
+`
+
+export const rotateIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: rotate(180deg)
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0)
+  }
+`
+
+export const rotateOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: rotate(0)
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(180deg)
+  }
+`
+
+export const rubberIn = keyframes`
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+`
+
+export const swingIn = keyframes`
+  20% {
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+  40% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+  60% {
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+  80% {
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+  to {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+`
+
+export const rollinIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+`
+
+export const jackIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.1) rotate(30deg);
+    transform-origin: center bottom;
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  70% {
+    transform: rotate(3deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+`

@@ -1,5 +1,6 @@
 import styled, { FlattenSimpleInterpolation, css } from 'styled-components'
 import { getStyle } from '../styled-components-layout'
+import { translateOut, translateIn } from './animate-styled'
 
 export type ModalType = {
   danger: FlattenSimpleInterpolation
@@ -21,8 +22,9 @@ const modalType: ModalType = {
 
 type Props = {
   type?: keyof ModalType | undefined
-  customTypes?: object
-  customStyle?: object
+  customTypes?: ModalType
+  customStyle?: any
+  isAnimated?: boolean
 }
 
 export const ModalInner = styled.div<Props>`
@@ -33,8 +35,10 @@ export const ModalInner = styled.div<Props>`
   position: relative;
   border: 1px solid transparent;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  opacity: 0;
   margin: 0 auto;
-  ${({ customStyle }: any) => customStyle}
+  animation-duration: 0.5s;
+  animation-name: ${({ isAnimated }) =>
+    isAnimated ? translateIn : translateOut};
+  ${({ customStyle }) => customStyle}
   ${getStyle('type', modalType)}
 `

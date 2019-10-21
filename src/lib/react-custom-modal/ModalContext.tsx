@@ -11,6 +11,7 @@ export type ContextModalType = {
   pop: () => void
   pushArray: (renderNodeModal: any) => void
   stack: Array<any>
+  shadowStack: Array<any>
 }
 
 const ModalContext = React.createContext<ContextModalType>({
@@ -18,6 +19,7 @@ const ModalContext = React.createContext<ContextModalType>({
   nodeModal: null,
   pop: () => null,
   stack: [],
+  shadowStack: [],
   pushArray: () => null,
 })
 
@@ -26,7 +28,7 @@ type Props = {
 }
 
 const ModalProvider = ({ children }: Props) => {
-  const { pop, push, last, stack, pushArray } = useStack()
+  const { pop, push, last, stack, pushArray, shadowStack } = useStack()
 
   return (
     <ModalContext.Provider
@@ -36,6 +38,7 @@ const ModalProvider = ({ children }: Props) => {
         pushArray,
         pop,
         stack,
+        shadowStack,
       }}
     >
       {children}
@@ -49,21 +52,34 @@ export { ModalProvider, ModalContext, ModalConsumer }
 
 const useStack = () => {
   const [stack, setStack] = useState<Array<any>>([])
+  const [shadowStack, setShadowStack] = useState<Array<any>>([])
 
   const last: (arg: { hideModal: () => void }) => ReactNode =
     stack[stack.length - 1]
 
-  const pop = () =>
-    setStack((prev: Array<ReactNode>) => {
+  const pop = () => {
+    setShadowStack((prev: Array<ReactNode>) => {
       const last = prev.pop()
       return prev.filter(item => item !== last)
     })
 
-  const push = (data: any) =>
-    setStack(prev => [...prev, data({ hideModal: pop, nodeModal: data })])
+    const timerId = setTimeout(() => {
+      setStack((prev: Array<ReactNode>) => {
+        const last = prev.pop()
+        return prev.filter(item => item !== last)
+      })
+    }, 400)
+    return () => clearTimeout(timerId)
+  }
+
+  const push = (data: any) => {
+    setStack(prev => [...prev, data({ hideModal: pop })])
+    setShadowStack(prev => [...prev, data({ hideModal: pop })])
+  }
 
   const pushArray = (data: any) => {
-    setStack(prev => prev.concat(data({ hideModal: pop })))
+    setStack(prev => prev.concat(data))
+    setShadowStack(prev => prev.concat(data))
   }
 
   return {
@@ -72,5 +88,6 @@ const useStack = () => {
     pop,
     stack,
     pushArray,
+    shadowStack,
   }
 }
