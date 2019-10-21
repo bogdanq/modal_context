@@ -2,71 +2,57 @@ import React from 'react'
 import { css, createGlobalStyle, keyframes } from 'styled-components'
 import { getStyle } from '../styled-components-layout'
 import { ModalInner } from '../'
-
-export type Animation =
-  | 'scale'
-  | 'translate'
-  | 'rotate'
-  | 'jackIn'
-  | 'rubber'
-  | 'swing'
-  | 'rollin'
-
-type Props = {
-  animationName?: Animation
-  isAnimated?: boolean
-  customAnimated?: any
-}
+import { GlobalModalStyleProps, Animation } from '../types'
 
 export const GlobalModalStyle = ({
   animationName,
   isAnimated,
-  customAnimated,
-}: Props) => {
+  customAnimation,
+}: GlobalModalStyleProps) => {
   const animationStyle = {
-    scale: css<Props>`
+    scale: css<GlobalModalStyleProps>`
       ${ModalInner} {
         animation-duration: 0.5s;
         animation-name: ${({ isAnimated }) =>
           isAnimated ? scaleIn : scaleOut};
       }
     `,
-    translate: css<Props>`
+    translate: css<GlobalModalStyleProps>`
       ${ModalInner} {
         animation-duration: 0.5s;
         animation-name: ${({ isAnimated }: any) =>
           isAnimated ? translateIn : translateOut};
       }
     `,
-    rotate: css<Props>`
+    rotate: css<GlobalModalStyleProps>`
       ${ModalInner} {
         animation-duration: 0.5s;
         animation-name: ${({ isAnimated }: any) =>
           isAnimated ? rotateIn : rotateOut};
       }
     `,
-    jackIn: css<Props>`
+    jackIn: css<GlobalModalStyleProps>`
       ${ModalInner} {
         animation-duration: 0.5s;
         animation-name: ${({ isAnimated }: any) =>
           isAnimated ? jackIn : scaleOut};
       }
     `,
-    rubber: css<Props>`
+    rubber: css<GlobalModalStyleProps>`
       ${ModalInner} {
         animation-duration: 0.5s;
         animation-name: ${({ isAnimated }: any) =>
           isAnimated ? rubberIn : scaleOut};
       }
     `,
-    swing: css<Props>`
+    swing: css<GlobalModalStyleProps>`
       ${ModalInner} {
         animation-duration: 0.5s;
         animation-name: ${({ isAnimated }: any) =>
           isAnimated ? swingIn : scaleOut};
       }
     `,
-    rollin: css<Props>`
+    rollin: css<GlobalModalStyleProps>`
       ${ModalInner} {
         animation-duration: 0.5s;
         animation-name: ${({ isAnimated }: any) =>
@@ -75,15 +61,18 @@ export const GlobalModalStyle = ({
     `,
   }
 
-  const GlobalModalStyled = css<Props>`
+  const GlobalModalStyled = css<GlobalModalStyleProps>`
+    body {
+      overflow: hidden;
+    }
     ${getStyle('animationName', animationStyle)}
-    ${({ customAnimated }) => customAnimated}
+    ${({ customAnimation }) => customAnimation}
   `
 
   const GlobalModalStyles = createGlobalStyle<{
     animationName?: Animation
     isAnimated?: boolean
-    customAnimated?: any
+    customAnimation?: any
   }>`${GlobalModalStyled}`
 
   return (
@@ -91,7 +80,7 @@ export const GlobalModalStyle = ({
       <GlobalModalStyles
         animationName={animationName}
         isAnimated={isAnimated}
-        customAnimated={customAnimated}
+        customAnimation={customAnimation}
       />
     </>
   )

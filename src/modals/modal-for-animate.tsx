@@ -1,22 +1,15 @@
 import React from 'react'
-import {
-  ModalType,
-  ModalWrapper,
-  Animation,
-  ModalInner,
-} from '../lib/react-custom-modal'
-import { CustomModalAnimateGlobal } from '../global'
+import { ModalWrapper, ModalInner } from '../lib/react-custom-modal'
 import { css, keyframes } from 'styled-components'
-import {
-  scaleOut,
-  rollinIn,
-} from '../lib/react-custom-modal/atoms/animate-styled'
+import { ModalType, Animation } from '../lib/react-custom-modal/types'
+
+type AnimationCustomStyle = 'rollin' | 'zoom'
 
 type Props = {
   onRequestClose: () => void
   type?: keyof ModalType
   animationName?: Animation
-  customAnimationName?: keyof AnimationCustomStyle | undefined
+  customAnimationName?: AnimationCustomStyle | undefined
 }
 
 export const ModalForAnimate = ({
@@ -45,12 +38,7 @@ export const ModalForAnimate = ({
   )
 }
 
-type AnimationCustomStyle = {
-  rollin: any
-  zoom: any
-}
-
-const animationCustomStyle: AnimationCustomStyle = {
+const animationCustomStyle = {
   rollin: css`
     ${ModalInner} {
       animation-duration: 0.5s;
@@ -78,7 +66,7 @@ export const ModalForCustomAnimate = ({
       <ModalWrapper
         onRequestClose={onRequestClose}
         type={type}
-        customAnimated={
+        customAnimation={
           customAnimationName && animationCustomStyle[customAnimationName]
         }
       >
@@ -92,7 +80,6 @@ export const ModalForCustomAnimate = ({
           nibh.
         </div>
       </ModalWrapper>
-      <CustomModalAnimateGlobal />
     </>
   )
 }
@@ -107,5 +94,27 @@ const zoomIn = keyframes`
     opacity: 1;
     transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+`
+
+const scaleOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: scale(1)
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(0.5)
+  }
+`
+
+const rollinIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 `

@@ -1,6 +1,7 @@
 import React from 'react'
-import { ModalType, ModalWrapper } from '../lib/react-custom-modal'
+import { ModalWrapper } from '../lib/react-custom-modal'
 import { css } from 'styled-components'
+import { ModalType } from '../lib/react-custom-modal/types'
 
 type Props = {
   onRequestClose: () => void
@@ -42,7 +43,7 @@ export const ModalForCustomTypes = ({ onRequestClose, type }: Props) => {
     <>
       <ModalWrapper
         onRequestClose={onRequestClose}
-        modalType={customModalType}
+        typesStyle={customModalType}
         type={type}
       >
         <div>

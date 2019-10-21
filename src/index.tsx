@@ -23,12 +23,12 @@ const App = () => {
   const { showModal, pop, pushArray } = React.useContext<ContextModalType>(
     ModalContext,
   )
-  React.useEffect(() => {
-    pushArray([
-      <ModalForAnimate onRequestClose={pop} animationName='jackIn' />,
-      <ModalForAnimate onRequestClose={pop} animationName='translate' />,
-    ])
-  }, [])
+  // React.useEffect(() => {
+  //   pushArray([
+  //     <ModalForAnimate onRequestClose={pop} animationName='jackIn' />,
+  //     <ModalForAnimate onRequestClose={pop} animationName='translate' />,
+  //   ])
+  // }, [])
 
   return (
     <>

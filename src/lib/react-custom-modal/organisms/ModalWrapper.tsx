@@ -1,32 +1,21 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import { ModalType, StyledWrapper, StyledRootWrapper, ModalInner } from '../'
-import { GlobalModalStyle, Animation } from '../atoms'
+import { StyledWrapper, StyledRootWrapper, ModalInner } from '../'
+import { GlobalModalStyle } from '../atoms'
 import { ModalContext, ContextModalType } from '../ModalContext'
-import { FlattenSimpleInterpolation } from 'styled-components'
-
-type Props = {
-  onRequestClose: () => void
-  children: ReactNode
-  type?: keyof ModalType
-  closeButton?: (close: () => void) => ReactNode
-  modalType?: ModalType
-  style?: FlattenSimpleInterpolation
-  animationName?: Animation
-  customAnimated?: any
-  nodeModal?: any
-}
+import { ModalWrapperProps } from '../types'
+import { ButtonWrapper, Button } from '../atoms/styled-root-wrapper'
 
 export const ModalWrapper = ({
   onRequestClose,
   children,
   type,
-  modalType,
+  typesStyle,
   closeButton,
   style,
   animationName,
-  customAnimated,
-}: Props) => {
+  customAnimation,
+}: ModalWrapperProps) => {
   const { stack, shadowStack } = React.useContext<ContextModalType>(
     ModalContext,
   )
@@ -36,11 +25,11 @@ export const ModalWrapper = ({
   return (
     <>
       <ModalPortal>
-        <StyledRootWrapper onClick={onRequestClose}>
+        <StyledRootWrapper className='modal-isOpen' onClick={onRequestClose}>
           <StyledWrapper>
             <ModalInner
               customStyle={style}
-              customTypes={modalType}
+              typesStyle={typesStyle}
               isAnimated={isAnimated}
               type={type}
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
@@ -49,7 +38,9 @@ export const ModalWrapper = ({
               {closeButton ? (
                 closeButton(onRequestClose)
               ) : (
-                <button onClick={onRequestClose}>Close</button>
+                <ButtonWrapper>
+                  <Button onClick={onRequestClose}>Ok</Button>
+                </ButtonWrapper>
               )}
             </ModalInner>
           </StyledWrapper>
@@ -58,7 +49,7 @@ export const ModalWrapper = ({
       <GlobalModalStyle
         animationName={animationName}
         isAnimated={isAnimated}
-        customAnimated={customAnimated}
+        customAnimation={customAnimation}
       />
     </>
   )

@@ -1,4 +1,4 @@
-import { ModalType, Animation } from './atoms'
+import { ModalType, Animation } from './types'
 
 type PropsName = {
   type: keyof ModalType
@@ -8,8 +8,8 @@ type PropsName = {
 export const getStyle = (propsName: keyof PropsName, styles: any) => (
   props: any,
 ) => {
-  if (props.customTypes) {
-    return props[propsName] && props.customTypes[props[propsName]]
+  if (props.typesStyle) {
+    return props[propsName] && props.typesStyle[props[propsName]]
   }
   return props[propsName] && styles[props[propsName]]
 }
