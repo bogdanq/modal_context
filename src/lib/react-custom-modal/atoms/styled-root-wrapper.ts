@@ -12,8 +12,6 @@ export const StyledRootWrapper = styled.div`
   outline: 0 !important;
   backface-visibility: hidden;
   background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
 `
 
 export const Button = styled.button`

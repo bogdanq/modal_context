@@ -4,14 +4,13 @@ import { css } from 'styled-components'
 import { ModalType } from '../lib/react-custom-modal/types'
 
 type Props = {
-  onRequestClose: () => void
   type?: keyof ModalType
 }
 
-export const ModalForTypes = ({ onRequestClose, type }: Props) => {
+export const ModalForTypes = ({ type }: Props) => {
   return (
     <>
-      <ModalWrapper onRequestClose={onRequestClose} type={type}>
+      <ModalWrapper type={type}>
         <div>
           <h1>Модальное окно тип - {type}</h1>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
@@ -38,14 +37,10 @@ const customModalType: ModalType = {
   `,
 }
 
-export const ModalForCustomTypes = ({ onRequestClose, type }: Props) => {
+export const ModalForCustomTypes = ({ type }: Props) => {
   return (
     <>
-      <ModalWrapper
-        onRequestClose={onRequestClose}
-        typesStyle={customModalType}
-        type={type}
-      >
+      <ModalWrapper typesStyle={customModalType} type={type}>
         <div>
           <h1>Модальное окно с кастомным типом - {type}</h1>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam

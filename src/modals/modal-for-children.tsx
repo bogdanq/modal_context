@@ -7,15 +7,15 @@ import {
 import { ModalForCustomAnimate } from './modal-for-animate'
 
 type Props = {
-  onRequestClose: () => void
+  index?: any
 }
 
-export const ModalForChildren = ({ onRequestClose }: Props) => {
+export const ModalForChildren = ({ index }: Props) => {
   const { showModal } = React.useContext<ContextModalType>(ModalContext)
 
   return (
     <>
-      <ModalWrapper onRequestClose={onRequestClose}>
+      <ModalWrapper index={index}>
         <div>
           <h1>Модальное окно с возможностью открыть дочернее окно</h1>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
@@ -27,11 +27,8 @@ export const ModalForChildren = ({ onRequestClose }: Props) => {
         </div>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForCustomAnimate
-                onRequestClose={hideModal}
-                customAnimationName='zoom'
-              />
+            showModal((index: any) => (
+              <ModalForCustomAnimate index={index} customAnimationName='zoom' />
             ))
           }}
         >

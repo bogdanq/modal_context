@@ -17,7 +17,6 @@ export type Animation =
   | 'rollin'
 
 export type ModalWrapperProps = {
-  onRequestClose: () => void
   children: ReactNode
   type?: keyof ModalType
   closeButton?: (close: () => void) => React.ReactNode
@@ -26,6 +25,11 @@ export type ModalWrapperProps = {
   animationName?: Animation
   customAnimation?: any
   nodeModal?: any
+  index?: any
+  cookie?: {
+    name: string
+    maxAge?: number
+  }
 }
 
 export type GlobalModalStyleProps = {
@@ -39,6 +43,7 @@ type ModalInnerProps = {
   typesStyle?: ModalType
   customStyle?: FlattenSimpleInterpolation
   isAnimated?: boolean
+  getAnimated?: boolean
 }
 
 export type ModalWrapperProps = {

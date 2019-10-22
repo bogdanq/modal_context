@@ -1,13 +1,11 @@
 import React from 'react'
 import { ModalWrapper } from '../lib/react-custom-modal'
 
-type Props = {
-  onRequestClose: () => void
-}
+type Props = {}
 
-export const DefaultModal = ({ onRequestClose }: Props) => {
+export const DefaultModal = ({  }: Props) => {
   return (
-    <ModalWrapper onRequestClose={onRequestClose}>
+    <ModalWrapper>
       <div>
         <h1>Модальное окно без еффектов</h1>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam

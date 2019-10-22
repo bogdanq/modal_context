@@ -2,9 +2,7 @@ import React from 'react'
 import { ModalWrapper } from '../lib/react-custom-modal'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 
-type Props = {
-  onRequestClose: () => void
-}
+type Props = {}
 
 const customStyle: FlattenSimpleInterpolation = css`
   background: #fff;
@@ -13,12 +11,15 @@ const customStyle: FlattenSimpleInterpolation = css`
   font-size: 1rem;
   padding: 0;
   padding-bottom: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
 `
 
-export const ModalForCustomStyle = ({ onRequestClose }: Props) => {
+export const ModalForCustomStyle = ({  }: Props) => {
   return (
     <>
-      <ModalWrapper style={customStyle} onRequestClose={onRequestClose}>
+      <ModalWrapper style={customStyle}>
         <Header>Модальное с кастомными стилями</Header>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
@@ -33,12 +34,11 @@ export const ModalForCustomStyle = ({ onRequestClose }: Props) => {
   )
 }
 
-export const ModalForCustomButton = ({ onRequestClose }: Props) => {
+export const ModalForCustomButton = ({  }: Props) => {
   return (
     <>
       <ModalWrapper
-        onRequestClose={onRequestClose}
-        closeButton={close => <Button onClick={close}>×</Button>}
+        closeButton={(close: any) => <Button onClick={close}>×</Button>}
       >
         <h2>Модальное с кастомной кнопкой закрытия</h2>
         <div>

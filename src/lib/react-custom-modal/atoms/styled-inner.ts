@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { getStyle } from '../styled-components-layout'
-import { translateOut } from './animate-styled'
+import { translateOut, translateIn } from './animate-styled'
 import { ModalType, ModalInnerProps } from '../types'
 import { Button } from './styled-root-wrapper'
 
@@ -47,7 +47,8 @@ export const ModalInner = styled.div<ModalInnerProps>`
   font-size: 1rem;
   margin: 0 auto;
   animation-duration: 0.5s;
-  animation-name: ${({ isAnimated }) => (isAnimated ? null : translateOut)};
+  animation-name: ${({ isAnimated }) =>
+    isAnimated ? translateIn : translateOut};
   ${({ customStyle }) => customStyle && customStyle}
   ${getStyle('type', modalType)}
 `

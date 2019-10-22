@@ -66,8 +66,14 @@ export const GlobalModalStyle = ({
       overflow: hidden;
     }
     ${getStyle('animationName', animationStyle)}
-    ${({ customAnimation }) => customAnimation}
   `
+  // const GlobalModalStyled = css<GlobalModalStyleProps>`
+  //   body {
+  //     overflow: hidden;
+  //   }
+  //   ${getStyle('animationName', animationStyle)}
+  //   ${({ customAnimation }) => customAnimation}
+  // `
 
   const GlobalModalStyles = createGlobalStyle<{
     animationName?: Animation

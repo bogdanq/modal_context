@@ -20,15 +20,25 @@ import './styles.css'
 import styled from 'styled-components'
 
 const App = () => {
-  const { showModal, pop, pushArray } = React.useContext<ContextModalType>(
-    ModalContext,
-  )
-  // React.useEffect(() => {
-  //   pushArray([
-  //     <ModalForAnimate onRequestClose={pop} animationName='jackIn' />,
-  //     <ModalForAnimate onRequestClose={pop} animationName='translate' />,
-  //   ])
-  // }, [])
+  const { showModal } = React.useContext<ContextModalType>(ModalContext)
+  React.useEffect(() => {
+    showModal([
+      <ModalForAnimate
+        animationName='jackIn'
+        cookie={{
+          name: 'default_modal_2',
+          maxAge: 1000 * 60,
+        }}
+      />,
+      <ModalForAnimate
+        animationName='translate'
+        cookie={{
+          name: 'default_modal_3',
+          maxAge: 1000 * 60,
+        }}
+      />,
+    ])
+  }, [])
 
   return (
     <>
@@ -40,9 +50,7 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <DefaultModal onRequestClose={hideModal} />
-            ))
+            showModal(<DefaultModal />)
           }}
         >
           Try me!
@@ -53,27 +61,21 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForTypes onRequestClose={hideModal} type='danger' />
-            ))
+            showModal(<ModalForTypes type='danger' />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForTypes onRequestClose={hideModal} type='success' />
-            ))
+            showModal(<ModalForTypes type='success' />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForTypes onRequestClose={hideModal} type='primary' />
-            ))
+            showModal(<ModalForTypes type='primary' />)
           }}
         >
           Try me!
@@ -86,27 +88,21 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForCustomTypes onRequestClose={hideModal} type='danger' />
-            ))
+            showModal(<ModalForCustomTypes type='danger' />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForCustomTypes onRequestClose={hideModal} type='success' />
-            ))
+            showModal(<ModalForCustomTypes type='success' />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForCustomTypes onRequestClose={hideModal} type='primary' />
-            ))
+            showModal(<ModalForCustomTypes type='primary' />)
           }}
         >
           Try me!
@@ -117,84 +113,49 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForAnimate
-                onRequestClose={hideModal}
-                animationName='scale'
-              />
-            ))
+            showModal(<ModalForAnimate animationName='scale' />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForAnimate
-                onRequestClose={hideModal}
-                animationName='translate'
-              />
-            ))
+            showModal(<ModalForAnimate animationName='translate' />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForAnimate
-                onRequestClose={hideModal}
-                animationName='rotate'
-              />
-            ))
+            showModal(<ModalForAnimate animationName='rotate' />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForAnimate
-                onRequestClose={hideModal}
-                animationName='jackIn'
-              />
-            ))
+            showModal(<ModalForAnimate animationName='jackIn' />)
           }}
         >
           Try me! jackIn
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForAnimate
-                onRequestClose={hideModal}
-                animationName='rubber'
-              />
-            ))
+            showModal(<ModalForAnimate animationName='rubber' />)
           }}
         >
           Try me! rubber
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForAnimate
-                onRequestClose={hideModal}
-                animationName='swing'
-              />
-            ))
+            showModal(<ModalForAnimate animationName='swing' />)
           }}
         >
           Try me! swing
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForAnimate
-                onRequestClose={hideModal}
-                animationName='rollin'
-              />
-            ))
+            showModal(<ModalForAnimate animationName='rollin' />)
           }}
         >
           Try me! rollin
@@ -205,24 +166,14 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForCustomAnimate
-                onRequestClose={hideModal}
-                customAnimationName='rollin'
-              />
-            ))
+            showModal(<ModalForCustomAnimate customAnimationName='rollin' />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForCustomAnimate
-                onRequestClose={hideModal}
-                customAnimationName='zoom'
-              />
-            ))
+            showModal(<ModalForCustomAnimate customAnimationName='zoom' />)
           }}
         >
           Try me! zoom
@@ -236,18 +187,14 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForCustomStyle onRequestClose={hideModal} />
-            ))
+            showModal(<ModalForCustomStyle />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForCustomButton onRequestClose={hideModal} />
-            ))
+            showModal(<ModalForCustomButton />)
           }}
         >
           Try me!
@@ -261,9 +208,7 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(({ hideModal }) => (
-              <ModalForChildren onRequestClose={hideModal} />
-            ))
+            showModal(<ModalForChildren />)
           }}
         >
           Try me!

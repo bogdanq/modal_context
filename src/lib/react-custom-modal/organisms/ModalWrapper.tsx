@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { useCookies } from 'react-cookie'
 import { StyledWrapper, StyledRootWrapper, ModalInner } from '../'
 import { GlobalModalStyle } from '../atoms'
 import { ModalContext, ContextModalType } from '../ModalContext'
@@ -7,7 +8,6 @@ import { ModalWrapperProps } from '../types'
 import { ButtonWrapper, Button } from '../atoms/styled-root-wrapper'
 
 export const ModalWrapper = ({
-  onRequestClose,
   children,
   type,
   typesStyle,
@@ -15,17 +15,29 @@ export const ModalWrapper = ({
   style,
   animationName,
   customAnimation,
+  cookie,
 }: ModalWrapperProps) => {
-  const { stack, shadowStack } = React.useContext<ContextModalType>(
-    ModalContext,
-  )
+  const { isAnimated, pop } = React.useContext<ContextModalType>(ModalContext)
 
-  const isAnimated = stack.length === shadowStack.length
+  const [cookies, setCookie, removeCookie] = useCookies()
+
+  const toogleCookie = React.useCallback(
+    cookie => {
+      if (cookies[cookie.name]) {
+        removeCookie(cookie.name)
+      } else {
+        setCookie(cookie.name, true, {
+          maxAge: cookie.maxAge ? cookie.maxAge : 1000 * 60 * 15,
+        })
+      }
+    },
+    [cookies],
+  )
 
   return (
     <>
       <ModalPortal>
-        <StyledRootWrapper className='modal-isOpen' onClick={onRequestClose}>
+        <StyledRootWrapper className='modal-isOpen' onClick={pop}>
           <StyledWrapper>
             <ModalInner
               customStyle={style}
@@ -35,11 +47,27 @@ export const ModalWrapper = ({
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
               {children}
+
+              {cookie && (
+                <div>
+                  <input
+                    checked={Boolean(cookies[cookie.name])}
+                    onChange={() => toogleCookie(cookie)}
+                    type='checkbox'
+                    id={`isVisible_${cookie.name}`}
+                    name={`isVisible_${cookie.name}`}
+                  />
+                  <label htmlFor={`isVisible_${cookie.name}`}>
+                    Больше не показывать
+                  </label>
+                </div>
+              )}
+
               {closeButton ? (
-                closeButton(onRequestClose)
+                closeButton(pop)
               ) : (
                 <ButtonWrapper>
-                  <Button onClick={onRequestClose}>Ok</Button>
+                  <Button onClick={pop}>Ok</Button>
                 </ButtonWrapper>
               )}
             </ModalInner>

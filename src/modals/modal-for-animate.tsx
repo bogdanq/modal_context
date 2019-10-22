@@ -1,27 +1,38 @@
 import React from 'react'
-import { ModalWrapper, ModalInner } from '../lib/react-custom-modal'
+import {
+  ModalWrapper,
+  ModalInner,
+  ModalContext,
+} from '../lib/react-custom-modal'
 import { css, keyframes } from 'styled-components'
 import { ModalType, Animation } from '../lib/react-custom-modal/types'
+import { ContextModalType } from '../lib/react-custom-modal/ModalContext'
 
 type AnimationCustomStyle = 'rollin' | 'zoom'
 
 type Props = {
-  onRequestClose: () => void
   type?: keyof ModalType
   animationName?: Animation
   customAnimationName?: AnimationCustomStyle | undefined
+  index?: any
+  cookie?: {
+    name: string
+    maxAge?: number
+  }
 }
 
 export const ModalForAnimate = ({
-  onRequestClose,
   type,
   animationName,
+  cookie,
+  index,
 }: Props) => {
   return (
     <>
       <ModalWrapper
+        index={index}
+        cookie={cookie}
         animationName={animationName}
-        onRequestClose={onRequestClose}
         type={type}
       >
         <div>
@@ -57,14 +68,15 @@ const animationCustomStyle = {
 }
 
 export const ModalForCustomAnimate = ({
-  onRequestClose,
   type,
   customAnimationName,
+  index,
 }: Props) => {
+  const { showModal } = React.useContext<ContextModalType>(ModalContext)
   return (
     <>
       <ModalWrapper
-        onRequestClose={onRequestClose}
+        index={index}
         type={type}
         customAnimation={
           customAnimationName && animationCustomStyle[customAnimationName]
@@ -78,6 +90,15 @@ export const ModalForCustomAnimate = ({
           faucibus. Nullam id tristique tortor. In sodales augue sed lectus
           congue ullamcorper. Integer sit amet nisl tellus. Nam in condimentum
           nibh.
+          <button
+            onClick={() => {
+              showModal((index: any) => (
+                <ModalForAnimate index={index} customAnimationName='zoom' />
+              ))
+            }}
+          >
+            Try me!
+          </button>
         </div>
       </ModalWrapper>
     </>

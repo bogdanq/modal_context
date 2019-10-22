@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from 'react'
+import { useCookies } from 'react-cookie'
 
 type RenderNodeModal = (arg: {
   hideModal: () => void
@@ -6,12 +7,12 @@ type RenderNodeModal = (arg: {
 }) => ReactNode
 
 export type ContextModalType = {
-  showModal: (renderNodeModal: RenderNodeModal) => void
+  showModal: (renderNodeModal: any) => void
   nodeModal: any
   pop: () => void
-  pushArray: (renderNodeModal: any) => void
   stack: Array<any>
   shadowStack: Array<any>
+  isAnimated: boolean
 }
 
 const ModalContext = React.createContext<ContextModalType>({
@@ -20,7 +21,7 @@ const ModalContext = React.createContext<ContextModalType>({
   pop: () => null,
   stack: [],
   shadowStack: [],
-  pushArray: () => null,
+  isAnimated: false,
 })
 
 type Props = {
@@ -28,17 +29,17 @@ type Props = {
 }
 
 const ModalProvider = ({ children }: Props) => {
-  const { pop, push, last, stack, pushArray, shadowStack } = useStack()
+  const { pop, push, last, stack, shadowStack, isAnimated } = useStack()
 
   return (
     <ModalContext.Provider
       value={{
         showModal: push,
         nodeModal: last,
-        pushArray,
         pop,
         stack,
         shadowStack,
+        isAnimated,
       }}
     >
       {children}
@@ -53,9 +54,9 @@ export { ModalProvider, ModalContext, ModalConsumer }
 const useStack = () => {
   const [stack, setStack] = useState<Array<any>>([])
   const [shadowStack, setShadowStack] = useState<Array<any>>([])
+  const [cookies] = useCookies()
 
-  const last: (arg: { hideModal: () => void }) => ReactNode =
-    stack[stack.length - 1]
+  const last: () => ReactNode = stack[stack.length - 1]
 
   const pop = () => {
     setShadowStack((prev: Array<ReactNode>) => {
@@ -73,21 +74,27 @@ const useStack = () => {
   }
 
   const push = (data: any) => {
-    setStack(prev => [...prev, data({ hideModal: pop })])
-    setShadowStack(prev => [...prev, data({ hideModal: pop })])
+    if (data.length) {
+      data.map((node: any) => {
+        if (!cookies[node.props.cookie.name]) {
+          setStack(prev => [...prev, node])
+          setShadowStack(prev => [...prev, node])
+        }
+      })
+    } else {
+      setStack(prev => [...prev, data])
+      setShadowStack(prev => [...prev, data])
+    }
   }
 
-  const pushArray = (data: any) => {
-    setStack(prev => prev.concat(data))
-    setShadowStack(prev => prev.concat(data))
-  }
+  const isAnimated = stack.length === shadowStack.length
 
   return {
     last,
     push,
     pop,
     stack,
-    pushArray,
     shadowStack,
+    isAnimated,
   }
 }
