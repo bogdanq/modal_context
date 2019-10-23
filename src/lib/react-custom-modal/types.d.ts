@@ -1,10 +1,24 @@
 import React from 'react'
-import { FlattenSimpleInterpolation } from 'styled-components'
+import {
+  FlattenSimpleInterpolation,
+  ThemedStyledFunction,
+  ThemeProps,
+} from 'styled-components'
 
 export type ModalType = {
-  danger: FlattenSimpleInterpolation
-  success: FlattenSimpleInterpolation
-  primary: FlattenSimpleInterpolation
+  danger: FlattenInterpolation
+  success: FlattenInterpolation
+  primary: FlattenInterpolation
+}
+
+export type AnimationType = {
+  scale: FlattenInterpolation
+  translate: FlattenInterpolation
+  rotate: FlattenInterpolation
+  jackIn: FlattenInterpolation
+  rubber: FlattenInterpolation
+  swing: FlattenInterpolation
+  rollin: FlattenInterpolation
 }
 
 export type Animation =
@@ -16,20 +30,13 @@ export type Animation =
   | 'swing'
   | 'rollin'
 
-export type ModalWrapperProps = {
-  children: ReactNode
+interface ModalWrapperProps extends Params {
+  children: (args: { closeModal: () => void }) => React.ReactNode
   type?: keyof ModalType
-  closeButton?: (close: () => void) => React.ReactNode
-  typesStyle?: ModalType
+  customTypeStyles?: ModalType
   style?: FlattenSimpleInterpolation
   animationName?: Animation
   customAnimation?: any
-  nodeModal?: any
-  index?: any
-  cookie?: {
-    name: string
-    maxAge?: number
-  }
 }
 
 export type GlobalModalStyleProps = {
@@ -40,20 +47,19 @@ export type GlobalModalStyleProps = {
 
 type ModalInnerProps = {
   type?: keyof ModalType
-  typesStyle?: ModalType
+  customTypeStyles?: ModalType
   customStyle?: FlattenSimpleInterpolation
   isAnimated?: boolean
-  getAnimated?: boolean
+  animationName?: any
+  customAnimation?: any
 }
 
-export type ModalWrapperProps = {
-  onRequestClose: () => void
-  children: React.ReactNode
+export type Params = {
+  id: number
+  cookie?: {
+    name: string
+    maxAge?: number
+  }
   type?: keyof ModalType
-  closeButton?: (close: () => void) => React.ReactNode
-  typesStyle?: ModalType
-  style?: (React.CSSProperties & FlattenSimpleInterpolation) | undefined
   animationName?: Animation
-  customAnimation?: any
-  nodeModal?: any
 }

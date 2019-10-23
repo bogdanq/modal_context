@@ -3,8 +3,12 @@ import { ModalConsumer } from './ModalContext'
 
 export const ModalRoot = () => (
   <ModalConsumer>
-    {({ nodeModal }) => {
-      const activeModal = nodeModal ? nodeModal : null
+    {({ stack, pop }) => {
+      const activeModal = stack
+        ? stack.map(modal => {
+            return modal.node({ id: modal.id, key: modal.id })
+          })
+        : null
 
       return activeModal
     }}

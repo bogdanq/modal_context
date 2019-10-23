@@ -13,7 +13,6 @@ import {
   ModalForAnimate,
   ModalForCustomAnimate,
   ModalForCustomStyle,
-  ModalForCustomButton,
   ModalForChildren,
 } from './modals'
 import './styles.css'
@@ -21,22 +20,29 @@ import styled from 'styled-components'
 
 const App = () => {
   const { showModal } = React.useContext<ContextModalType>(ModalContext)
+
   React.useEffect(() => {
     showModal([
-      <ModalForAnimate
-        animationName='jackIn'
-        cookie={{
-          name: 'default_modal_2',
-          maxAge: 1000 * 60,
-        }}
-      />,
-      <ModalForAnimate
-        animationName='translate'
-        cookie={{
-          name: 'default_modal_3',
-          maxAge: 1000 * 60,
-        }}
-      />,
+      params => {
+        return (
+          <ModalForAnimate
+            {...params}
+            animationName='jackIn'
+            cookie={{
+              name: 'default_modal_2',
+            }}
+          />
+        )
+      },
+      params => (
+        <ModalForAnimate
+          {...params}
+          animationName='translate'
+          cookie={{
+            name: 'default_modal_3',
+          }}
+        />
+      ),
     ])
   }, [])
 
@@ -50,7 +56,7 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(<DefaultModal />)
+            showModal(params => <DefaultModal {...params} />)
           }}
         >
           Try me!
@@ -61,21 +67,21 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(<ModalForTypes type='danger' />)
+            showModal(params => <ModalForTypes type='danger' {...params} />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForTypes type='success' />)
+            showModal(params => <ModalForTypes type='success' {...params} />)
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForTypes type='primary' />)
+            showModal(params => <ModalForTypes type='primary' {...params} />)
           }}
         >
           Try me!
@@ -88,21 +94,27 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(<ModalForCustomTypes type='danger' />)
+            showModal(params => (
+              <ModalForCustomTypes type='danger' {...params} />
+            ))
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForCustomTypes type='success' />)
+            showModal(params => (
+              <ModalForCustomTypes type='success' {...params} />
+            ))
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForCustomTypes type='primary' />)
+            showModal(params => (
+              <ModalForCustomTypes type='primary' {...params} />
+            ))
           }}
         >
           Try me!
@@ -113,49 +125,63 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(<ModalForAnimate animationName='scale' />)
+            showModal(params => (
+              <ModalForAnimate animationName='scale' {...params} />
+            ))
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForAnimate animationName='translate' />)
+            showModal(params => (
+              <ModalForAnimate animationName='translate' {...params} />
+            ))
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForAnimate animationName='rotate' />)
+            showModal(params => (
+              <ModalForAnimate animationName='rotate' {...params} />
+            ))
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForAnimate animationName='jackIn' />)
+            showModal(params => (
+              <ModalForAnimate animationName='jackIn' {...params} />
+            ))
           }}
         >
           Try me! jackIn
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForAnimate animationName='rubber' />)
+            showModal(params => (
+              <ModalForAnimate animationName='rubber' {...params} />
+            ))
           }}
         >
           Try me! rubber
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForAnimate animationName='swing' />)
+            showModal(params => (
+              <ModalForAnimate animationName='swing' {...params} />
+            ))
           }}
         >
           Try me! swing
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForAnimate animationName='rollin' />)
+            showModal(params => (
+              <ModalForAnimate animationName='rollin' {...params} />
+            ))
           }}
         >
           Try me! rollin
@@ -166,14 +192,18 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(<ModalForCustomAnimate customAnimationName='rollin' />)
+            showModal(params => (
+              <ModalForCustomAnimate customAnimationName='rollin' {...params} />
+            ))
           }}
         >
           Try me!
         </button>
         <button
           onClick={() => {
-            showModal(<ModalForCustomAnimate customAnimationName='zoom' />)
+            showModal(params => (
+              <ModalForCustomAnimate customAnimationName='zoom' {...params} />
+            ))
           }}
         >
           Try me! zoom
@@ -187,14 +217,7 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(<ModalForCustomStyle />)
-          }}
-        >
-          Try me!
-        </button>
-        <button
-          onClick={() => {
-            showModal(<ModalForCustomButton />)
+            showModal(params => <ModalForCustomStyle {...params} />)
           }}
         >
           Try me!
@@ -208,7 +231,7 @@ const App = () => {
       <FlexWrapper>
         <button
           onClick={() => {
-            showModal(<ModalForChildren />)
+            showModal(params => <ModalForChildren {...params} />)
           }}
         >
           Try me!

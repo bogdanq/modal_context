@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components'
 import { getStyle } from '../styled-components-layout'
-import { translateOut, translateIn } from './animate-styled'
-import { ModalType, ModalInnerProps } from '../types'
+import { translateOut, translateIn, animationStyle } from './animate-styled'
+import { ModalInnerProps } from '../types'
 import { Button } from './styled-root-wrapper'
 
-const modalType: ModalType = {
+const modalType = {
   danger: css`
     background: #ff3547;
     color: #fff;
@@ -49,6 +49,8 @@ export const ModalInner = styled.div<ModalInnerProps>`
   animation-duration: 0.5s;
   animation-name: ${({ isAnimated }) =>
     isAnimated ? translateIn : translateOut};
-  ${({ customStyle }) => customStyle && customStyle}
+  ${({ customStyle }) => customStyle}
   ${getStyle('type', modalType)}
+  ${getStyle('animationName', animationStyle)}
+  ${({ customAnimation }) => customAnimation}
 `

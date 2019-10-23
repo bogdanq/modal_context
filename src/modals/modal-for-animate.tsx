@@ -1,49 +1,40 @@
 import React from 'react'
-import {
-  ModalWrapper,
-  ModalInner,
-  ModalContext,
-} from '../lib/react-custom-modal'
+import { ModalWrapper, ModalContext } from '../lib/react-custom-modal'
 import { css, keyframes } from 'styled-components'
-import { ModalType, Animation } from '../lib/react-custom-modal/types'
+import { Params } from '../lib/react-custom-modal/types'
 import { ContextModalType } from '../lib/react-custom-modal/ModalContext'
+import { Button } from './styled'
 
-type AnimationCustomStyle = 'rollin' | 'zoom'
-
-type Props = {
-  type?: keyof ModalType
-  animationName?: Animation
-  customAnimationName?: AnimationCustomStyle | undefined
-  index?: any
-  cookie?: {
-    name: string
-    maxAge?: number
-  }
+interface Props extends Params {
+  customAnimationName?: 'rollin' | 'zoom'
 }
 
 export const ModalForAnimate = ({
   type,
   animationName,
   cookie,
-  index,
+  ...params
 }: Props) => {
   return (
     <>
       <ModalWrapper
-        index={index}
         cookie={cookie}
         animationName={animationName}
         type={type}
+        {...params}
       >
-        <div>
-          <h1>Модалка с анимацией - {animationName}</h1>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-          consectetur euismod erat. Sed imperdiet sollicitudin urna non
-          sollicitudin. Interdum et malesuada fames ac ante ipsum primis in
-          faucibus. Nullam id tristique tortor. In sodales augue sed lectus
-          congue ullamcorper. Integer sit amet nisl tellus. Nam in condimentum
-          nibh.
-        </div>
+        {({ closeModal }) => (
+          <div>
+            <h1>Модалка с анимацией - {animationName}</h1>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+            consectetur euismod erat. Sed imperdiet sollicitudin urna non
+            sollicitudin. Interdum et malesuada fames ac ante ipsum primis in
+            faucibus. Nullam id tristique tortor. In sodales augue sed lectus
+            congue ullamcorper. Integer sit amet nisl tellus. Nam in condimentum
+            nibh.
+            <Button onClick={closeModal}>×</Button>
+          </div>
+        )}
       </ModalWrapper>
     </>
   )
@@ -51,55 +42,53 @@ export const ModalForAnimate = ({
 
 const animationCustomStyle = {
   rollin: css`
-    ${ModalInner} {
-      animation-duration: 0.5s;
-      animation-name: ${({ isAnimated }: { isAnimated?: boolean }) =>
-        isAnimated ? rollinIn : scaleOut};
-    }
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }: { isAnimated?: boolean }) =>
+      isAnimated ? rollinIn : scaleOut};
   `,
-
   zoom: css`
-    ${ModalInner} {
-      animation-duration: 0.5s;
-      animation-name: ${({ isAnimated }: { isAnimated?: boolean }) =>
-        isAnimated ? zoomIn : scaleOut};
-    }
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }: { isAnimated?: boolean }) =>
+      isAnimated ? zoomIn : scaleOut};
   `,
 }
 
 export const ModalForCustomAnimate = ({
   type,
   customAnimationName,
-  index,
+  ...params
 }: Props) => {
   const { showModal } = React.useContext<ContextModalType>(ModalContext)
   return (
     <>
       <ModalWrapper
-        index={index}
         type={type}
         customAnimation={
           customAnimationName && animationCustomStyle[customAnimationName]
         }
+        {...params}
       >
-        <div>
-          <h1>Модалка с кастомной анимацией</h1>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-          consectetur euismod erat. Sed imperdiet sollicitudin urna non
-          sollicitudin. Interdum et malesuada fames ac ante ipsum primis in
-          faucibus. Nullam id tristique tortor. In sodales augue sed lectus
-          congue ullamcorper. Integer sit amet nisl tellus. Nam in condimentum
-          nibh.
-          <button
-            onClick={() => {
-              showModal((index: any) => (
-                <ModalForAnimate index={index} customAnimationName='zoom' />
-              ))
-            }}
-          >
-            Try me!
-          </button>
-        </div>
+        {({ closeModal }) => (
+          <div>
+            <h1>Модалка с кастомной анимацией</h1>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+            consectetur euismod erat. Sed imperdiet sollicitudin urna non
+            sollicitudin. Interdum et malesuada fames ac ante ipsum primis in
+            faucibus. Nullam id tristique tortor. In sodales augue sed lectus
+            congue ullamcorper. Integer sit amet nisl tellus. Nam in condimentum
+            nibh.
+            <Button onClick={closeModal}>×</Button>
+            <button
+              onClick={() => {
+                showModal(params => (
+                  <ModalForAnimate {...params} customAnimationName='zoom' />
+                ))
+              }}
+            >
+              Try me!
+            </button>
+          </div>
+        )}
       </ModalWrapper>
     </>
   )

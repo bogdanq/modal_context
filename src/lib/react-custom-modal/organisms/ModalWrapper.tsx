@@ -5,19 +5,20 @@ import { StyledWrapper, StyledRootWrapper, ModalInner } from '../'
 import { GlobalModalStyle } from '../atoms'
 import { ModalContext, ContextModalType } from '../ModalContext'
 import { ModalWrapperProps } from '../types'
-import { ButtonWrapper, Button } from '../atoms/styled-root-wrapper'
 
 export const ModalWrapper = ({
   children,
   type,
-  typesStyle,
-  closeButton,
+  customTypeStyles,
   style,
   animationName,
   customAnimation,
   cookie,
+  id,
 }: ModalWrapperProps) => {
-  const { isAnimated, pop } = React.useContext<ContextModalType>(ModalContext)
+  const { stack, currentNodeId, pop } = React.useContext<ContextModalType>(
+    ModalContext,
+  )
 
   const [cookies, setCookie, removeCookie] = useCookies()
 
@@ -34,19 +35,31 @@ export const ModalWrapper = ({
     [cookies],
   )
 
+  const findId = React.useMemo(() => stack.findIndex(item => item.id === id), [
+    id,
+    stack,
+  ])
+
+  const findCurrentNodeId = React.useMemo(
+    () => stack.findIndex(item => item.id === currentNodeId),
+    [currentNodeId, stack],
+  )
+
   return (
     <>
       <ModalPortal>
-        <StyledRootWrapper className='modal-isOpen' onClick={pop}>
+        <StyledRootWrapper onClick={() => pop(id)}>
           <StyledWrapper>
             <ModalInner
+              animationName={animationName}
+              customAnimation={customAnimation}
               customStyle={style}
-              typesStyle={typesStyle}
-              isAnimated={isAnimated}
+              customTypeStyles={customTypeStyles}
+              isAnimated={findId !== findCurrentNodeId}
               type={type}
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
-              {children}
+              {children({ closeModal: () => pop(id) })}
 
               {cookie && (
                 <div>
@@ -62,23 +75,11 @@ export const ModalWrapper = ({
                   </label>
                 </div>
               )}
-
-              {closeButton ? (
-                closeButton(pop)
-              ) : (
-                <ButtonWrapper>
-                  <Button onClick={pop}>Ok</Button>
-                </ButtonWrapper>
-              )}
             </ModalInner>
           </StyledWrapper>
         </StyledRootWrapper>
       </ModalPortal>
-      <GlobalModalStyle
-        animationName={animationName}
-        isAnimated={isAnimated}
-        customAnimation={customAnimation}
-      />
+      <GlobalModalStyle />
     </>
   )
 }

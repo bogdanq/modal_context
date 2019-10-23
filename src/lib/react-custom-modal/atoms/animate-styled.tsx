@@ -1,95 +1,58 @@
 import React from 'react'
 import { css, createGlobalStyle, keyframes } from 'styled-components'
-import { getStyle } from '../styled-components-layout'
-import { ModalInner } from '../'
-import { GlobalModalStyleProps, Animation } from '../types'
+import { GlobalModalStyleProps, AnimationType } from '../types'
 
-export const GlobalModalStyle = ({
-  animationName,
-  isAnimated,
-  customAnimation,
-}: GlobalModalStyleProps) => {
-  const animationStyle = {
-    scale: css<GlobalModalStyleProps>`
-      ${ModalInner} {
-        animation-duration: 0.5s;
-        animation-name: ${({ isAnimated }) =>
-          isAnimated ? scaleIn : scaleOut};
-      }
-    `,
-    translate: css<GlobalModalStyleProps>`
-      ${ModalInner} {
-        animation-duration: 0.5s;
-        animation-name: ${({ isAnimated }: any) =>
-          isAnimated ? translateIn : translateOut};
-      }
-    `,
-    rotate: css<GlobalModalStyleProps>`
-      ${ModalInner} {
-        animation-duration: 0.5s;
-        animation-name: ${({ isAnimated }: any) =>
-          isAnimated ? rotateIn : rotateOut};
-      }
-    `,
-    jackIn: css<GlobalModalStyleProps>`
-      ${ModalInner} {
-        animation-duration: 0.5s;
-        animation-name: ${({ isAnimated }: any) =>
-          isAnimated ? jackIn : scaleOut};
-      }
-    `,
-    rubber: css<GlobalModalStyleProps>`
-      ${ModalInner} {
-        animation-duration: 0.5s;
-        animation-name: ${({ isAnimated }: any) =>
-          isAnimated ? rubberIn : scaleOut};
-      }
-    `,
-    swing: css<GlobalModalStyleProps>`
-      ${ModalInner} {
-        animation-duration: 0.5s;
-        animation-name: ${({ isAnimated }: any) =>
-          isAnimated ? swingIn : scaleOut};
-      }
-    `,
-    rollin: css<GlobalModalStyleProps>`
-      ${ModalInner} {
-        animation-duration: 0.5s;
-        animation-name: ${({ isAnimated }: any) =>
-          isAnimated ? rollinIn : scaleOut};
-      }
-    `,
-  }
-
-  const GlobalModalStyled = css<GlobalModalStyleProps>`
+export const GlobalModalStyle = () => {
+  const GlobalModalStyled = css`
     body {
       overflow: hidden;
     }
-    ${getStyle('animationName', animationStyle)}
   `
-  // const GlobalModalStyled = css<GlobalModalStyleProps>`
-  //   body {
-  //     overflow: hidden;
-  //   }
-  //   ${getStyle('animationName', animationStyle)}
-  //   ${({ customAnimation }) => customAnimation}
-  // `
 
-  const GlobalModalStyles = createGlobalStyle<{
-    animationName?: Animation
-    isAnimated?: boolean
-    customAnimation?: any
-  }>`${GlobalModalStyled}`
+  const GlobalModalStyles = createGlobalStyle`${GlobalModalStyled}`
 
   return (
     <>
-      <GlobalModalStyles
-        animationName={animationName}
-        isAnimated={isAnimated}
-        customAnimation={customAnimation}
-      />
+      <GlobalModalStyles />
     </>
   )
+}
+
+export const animationStyle = {
+  scale: css<GlobalModalStyleProps>`
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }) => (isAnimated ? scaleIn : scaleOut)};
+  `,
+  translate: css<GlobalModalStyleProps>`
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }: any) =>
+      isAnimated ? translateIn : translateOut};
+  `,
+  rotate: css<GlobalModalStyleProps>`
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }: any) =>
+      isAnimated ? rotateIn : rotateOut};
+  `,
+  jackIn: css<GlobalModalStyleProps>`
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }: any) =>
+      isAnimated ? jackIn : scaleOut};
+  `,
+  rubber: css<GlobalModalStyleProps>`
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }: any) =>
+      isAnimated ? rubberIn : scaleOut};
+  `,
+  swing: css<GlobalModalStyleProps>`
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }: any) =>
+      isAnimated ? swingIn : scaleOut};
+  `,
+  rollin: css<GlobalModalStyleProps>`
+    animation-duration: 0.5s;
+    animation-name: ${({ isAnimated }: any) =>
+      isAnimated ? rollinIn : scaleOut};
+  `,
 }
 
 export const scaleIn = keyframes`
