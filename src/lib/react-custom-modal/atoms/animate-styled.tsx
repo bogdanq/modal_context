@@ -1,6 +1,6 @@
 import React from 'react'
 import { css, createGlobalStyle, keyframes } from 'styled-components'
-import { GlobalModalStyleProps, AnimationType } from '../types'
+import { GlobalModalStyleProps } from '../types'
 
 export const GlobalModalStyle = () => {
   const GlobalModalStyled = css`

@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
-export const StyledRootWrapper = styled.div`
+export const StyledRootWrapper = styled.div<{
+  cookie?: { name: string; maxAge?: number }
+  id?: any
+}>`
   overflow-x: hidden;
   overflow-y: auto;
   top: 0;
@@ -32,6 +35,7 @@ export const Button = styled.button`
     background-color: #4f9ce4;
   }
 `
+
 export const ButtonWrapper = styled.div`
   width: 100%;
   text-align: center;

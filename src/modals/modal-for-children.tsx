@@ -1,9 +1,7 @@
 import React from 'react'
 import { ModalWrapper } from '../lib/react-custom-modal'
-import {
-  ContextModalType,
-  ModalContext,
-} from '../lib/react-custom-modal/ModalContext'
+import { ModalContext } from '../lib/react-custom-modal/ModalContext'
+import { ContextModalType } from '../lib/react-custom-modal/types'
 import { ModalForCustomAnimate } from './modal-for-animate'
 import { Params } from '../lib/react-custom-modal/types'
 import { Button } from './styled'

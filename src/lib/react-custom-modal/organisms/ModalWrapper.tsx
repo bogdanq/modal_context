@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import { useCookies } from 'react-cookie'
 import { StyledWrapper, StyledRootWrapper, ModalInner } from '../'
 import { GlobalModalStyle } from '../atoms'
-import { ModalContext, ContextModalType } from '../ModalContext'
-import { ModalWrapperProps } from '../types'
+import { ModalContext } from '../ModalContext'
+import { ModalWrapperProps, ContextModalType } from '../types'
 
 export const ModalWrapper = ({
   children,
@@ -15,40 +15,47 @@ export const ModalWrapper = ({
   customAnimation,
   cookie,
   id,
+  condition,
 }: ModalWrapperProps) => {
-  const { stack, currentNodeId, pop } = React.useContext<ContextModalType>(
-    ModalContext,
-  )
+  const { nodeList, currentNodeId, hideModal } = React.useContext<
+    ContextModalType
+  >(ModalContext)
 
   const [cookies, setCookie, removeCookie] = useCookies()
 
-  const toogleCookie = React.useCallback(
-    cookie => {
-      if (cookies[cookie.name]) {
-        removeCookie(cookie.name)
-      } else {
-        setCookie(cookie.name, true, {
-          maxAge: cookie.maxAge ? cookie.maxAge : 1000 * 60 * 15,
-        })
-      }
-    },
-    [cookies],
+  const isFindCookieName = React.useMemo(
+    () => getCookieName(cookies, cookie),
+    [],
   )
 
-  const findId = React.useMemo(() => stack.findIndex(item => item.id === id), [
-    id,
-    stack,
-  ])
+  const toogleCookie = React.useCallback(cookie => {
+    if (isFindCookieName) {
+      setCookie(cookie.name, true, {
+        maxAge: cookie.maxAge ? cookie.maxAge : 1000 * 60 * 15,
+      })
+    } else {
+      removeCookie(cookie.name)
+    }
+  }, [])
+
+  const findId = React.useMemo(
+    () => nodeList.findIndex(item => item.id === id),
+    [id, nodeList],
+  )
 
   const findCurrentNodeId = React.useMemo(
-    () => stack.findIndex(item => item.id === currentNodeId),
-    [currentNodeId, stack],
+    () => nodeList.findIndex(item => item.id === currentNodeId),
+    [currentNodeId, nodeList],
   )
 
   return (
     <>
-      <ModalPortal>
-        <StyledRootWrapper onClick={() => pop(id)}>
+      <ModalPortal isFindCookieName={isFindCookieName} condition={condition}>
+        <StyledRootWrapper
+          onClick={() => hideModal(id)}
+          cookie={cookie}
+          id={id}
+        >
           <StyledWrapper>
             <ModalInner
               animationName={animationName}
@@ -59,9 +66,9 @@ export const ModalWrapper = ({
               type={type}
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
-              {children({ closeModal: () => pop(id) })}
+              {children({ closeModal: () => hideModal(id) })}
 
-              {cookie && (
+              {cookie && !cookie.isNotChange && (
                 <div>
                   <input
                     checked={Boolean(cookies[cookie.name])}
@@ -77,15 +84,40 @@ export const ModalWrapper = ({
               )}
             </ModalInner>
           </StyledWrapper>
+          <GlobalModalStyle />
         </StyledRootWrapper>
       </ModalPortal>
-      <GlobalModalStyle />
     </>
   )
 }
 
-export const ModalPortal = ({ children }: { children: React.ReactElement }) => {
+export const ModalPortal = ({
+  children,
+  isFindCookieName,
+  condition = () => true,
+}: {
+  children: React.ReactElement
+  isFindCookieName: boolean
+  condition?: () => boolean
+}) => {
   const rootElement = document.querySelector('#modal')
 
-  return rootElement ? ReactDOM.createPortal(children, rootElement) : null
+  if (rootElement && isFindCookieName && condition()) {
+    return ReactDOM.createPortal(children, rootElement)
+  }
+
+  return null
+}
+
+const getCookieName = <T, U extends keyof T>(
+  cookies: T,
+  cookie?: { name: U; isNotChange?: boolean } | null,
+): boolean => {
+  if (cookie) {
+    if (cookies[cookie.name]) {
+      return false
+    }
+  }
+
+  return true
 }

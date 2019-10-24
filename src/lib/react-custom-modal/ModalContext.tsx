@@ -1,23 +1,10 @@
-import React, { ReactNode, useState, Dispatch } from 'react'
-import { useCookies } from 'react-cookie'
-
-type RenderNodeModal = (arg: { id: number }) => ReactNode
-type Push = <T extends RenderNodeModal | Array<RenderNodeModal>>(
-  renderNodeModal: T,
-) => void
-
-export type ContextModalType = {
-  showModal: Push
-  pop: (id: number) => void
-  stack: Array<any>
-  currentNodeId: number | null
-  setCurrentNodeId: Dispatch<any>
-}
+import React, { ReactNode, useState } from 'react'
+import { ContextModalType, CurrentModal } from './types'
 
 const ModalContext = React.createContext<ContextModalType>({
   showModal: () => null,
-  pop: () => null,
-  stack: [],
+  hideModal: () => null,
+  nodeList: [],
   currentNodeId: null,
   setCurrentNodeId: () => null,
 })
@@ -27,14 +14,20 @@ type Props = {
 }
 
 const ModalProvider = ({ children }: Props) => {
-  const { pop, push, stack, currentNodeId, setCurrentNodeId } = useStack()
+  const {
+    nodeRemove,
+    nodePush,
+    nodeList,
+    currentNodeId,
+    setCurrentNodeId,
+  } = useStack()
 
   return (
     <ModalContext.Provider
       value={{
-        showModal: push,
-        pop,
-        stack,
+        showModal: nodePush,
+        hideModal: nodeRemove,
+        nodeList,
         currentNodeId,
         setCurrentNodeId,
       }}
@@ -44,49 +37,41 @@ const ModalProvider = ({ children }: Props) => {
   )
 }
 
-const ModalConsumer = ModalContext.Consumer
+export { ModalProvider, ModalContext }
 
-export { ModalProvider, ModalContext, ModalConsumer }
+export const useStack = () => {
+  const [nodeList, setNodeList] = useState<Array<CurrentModal>>([])
+  const [currentNodeId, setCurrentNodeId] = React.useState<number | null>(null)
 
-const useStack = () => {
-  const [stack, setStack] = useState<Array<ReactNode>>([])
-  const [cookies] = useCookies()
-  const [currentNodeId, setCurrentNodeId] = React.useState(null)
-
-  const pop = (id: any) => {
+  const nodeRemove = (id: number) => {
     setCurrentNodeId(id)
 
     const timerId = setTimeout(() => {
-      setStack((prev: Array<ReactNode>) => {
-        const last = prev.pop()
-        return prev.filter(item => item !== last)
+      setNodeList((prev: Array<CurrentModal>) => {
+        return prev.filter(item => item.id !== id)
       })
     }, 400)
 
     return () => clearTimeout(timerId)
   }
 
-  const push = (data: ReactNode | [ReactNode]) => {
+  const nodePush = (data: ReactNode | Array<ReactNode>) => {
     if (typeof data === 'function') {
-      if (!data().props.cookie) {
-        const id = Math.random()
-        setStack(prev => [...prev, { id, node: data }])
-      }
+      const id = Math.random()
+      setNodeList(prev => [...prev, { id, node: data }])
     }
 
     if (Array.isArray(data)) {
-      data.map((node: any, index) => {
-        if (!cookies[node().props.cookie.name]) {
-          setStack(prev => [...prev, { id: index, node }])
-        }
+      data.map((node: ReactNode, index) => {
+        setNodeList(prev => [...prev, { id: index, node }])
       })
     }
   }
 
   return {
-    push,
-    pop,
-    stack,
+    nodePush,
+    nodeRemove,
+    nodeList,
     currentNodeId,
     setCurrentNodeId,
   }

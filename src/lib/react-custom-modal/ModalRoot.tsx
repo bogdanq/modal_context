@@ -1,16 +1,25 @@
 import React from 'react'
-import { ModalConsumer } from './ModalContext'
+import { ModalContext, ModalProvider } from './ModalContext'
 
-export const ModalRoot = () => (
-  <ModalConsumer>
-    {({ stack, pop }) => {
-      const activeModal = stack
-        ? stack.map(modal => {
+export const ModalRootProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => (
+  <ModalProvider>
+    {children}
+    <ModalRoot />
+  </ModalProvider>
+)
+
+const ModalRoot = () => (
+  <ModalContext.Consumer>
+    {({ nodeList }) => {
+      return nodeList
+        ? nodeList.map(modal => {
             return modal.node({ id: modal.id, key: modal.id })
           })
         : null
-
-      return activeModal
     }}
-  </ModalConsumer>
+  </ModalContext.Consumer>
 )

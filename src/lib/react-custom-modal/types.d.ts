@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch } from 'react'
 import {
   FlattenSimpleInterpolation,
   ThemedStyledFunction,
@@ -56,10 +56,28 @@ type ModalInnerProps = {
 
 export type Params = {
   id: number
+  condition?: () => boolean
   cookie?: {
     name: string
     maxAge?: number
+    isNotChange?: boolean
+    showCount?: number
   }
   type?: keyof ModalType
   animationName?: Animation
 }
+
+export type RenderNodeModal = (arg: { id: number }) => ReactNode
+export type ShowModal = <T extends RenderNodeModal | Array<RenderNodeModal>>(
+  renderNodeModal: T,
+) => void
+
+export type ContextModalType = {
+  showModal: ShowModal
+  hideModal: (id: number) => void
+  nodeList: Array<any>
+  currentNodeId: number | null
+  setCurrentNodeId: Dispatch<any>
+}
+
+export type CurrentModal = { id: number; node: ReactNode }

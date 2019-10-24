@@ -2,7 +2,7 @@ import React from 'react'
 import { ModalWrapper, ModalContext } from '../lib/react-custom-modal'
 import { css, keyframes } from 'styled-components'
 import { Params } from '../lib/react-custom-modal/types'
-import { ContextModalType } from '../lib/react-custom-modal/ModalContext'
+import { ContextModalType } from '../lib/react-custom-modal/types'
 import { Button } from './styled'
 
 interface Props extends Params {
@@ -13,6 +13,7 @@ export const ModalForAnimate = ({
   type,
   animationName,
   cookie,
+  condition,
   ...params
 }: Props) => {
   return (
@@ -21,6 +22,7 @@ export const ModalForAnimate = ({
         cookie={cookie}
         animationName={animationName}
         type={type}
+        condition={condition}
         {...params}
       >
         {({ closeModal }) => (

@@ -1,11 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {
-  ModalProvider,
-  ModalContext,
-  ModalRoot,
-  ContextModalType,
-} from './lib/react-custom-modal'
+import { ModalContext, ModalRootProvider } from './lib/react-custom-modal'
+import { ContextModalType } from './lib/react-custom-modal/types'
 import {
   DefaultModal,
   ModalForTypes,
@@ -28,8 +24,9 @@ const App = () => {
           <ModalForAnimate
             {...params}
             animationName='jackIn'
+            condition={() => true}
             cookie={{
-              name: 'default_modal_2',
+              name: 'default_modal_0',
             }}
           />
         )
@@ -39,7 +36,8 @@ const App = () => {
           {...params}
           animationName='translate'
           cookie={{
-            name: 'default_modal_3',
+            name: 'default_modal_1',
+            isNotChange: true,
           }}
         />
       ),
@@ -253,9 +251,8 @@ const FlexWrapper = styled.div`
 
 const rootElement = document.getElementById('root')
 ReactDOM.render(
-  <ModalProvider>
+  <ModalRootProvider>
     <App />
-    <ModalRoot />
-  </ModalProvider>,
+  </ModalRootProvider>,
   rootElement,
 )
