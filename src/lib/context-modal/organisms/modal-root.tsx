@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { useCookies } from 'react-cookie'
-import { StyledWrapper, StyledRootWrapper, ModalInner, Label } from '../'
+import { StyledWrapper, StyledRootWrapper, ModalInner, Label } from '../atoms'
 import { GlobalModalStyle } from '../atoms'
 import { ModalContext } from '../modal-context'
 import {

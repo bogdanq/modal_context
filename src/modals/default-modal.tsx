@@ -1,6 +1,6 @@
 import React from 'react'
-import { Modal } from '../lib/react-custom-modal'
-import { Params } from '../lib/react-custom-modal/types'
+import { Modal } from '../lib/context-modal'
+import { Params } from '../lib/context-modal/types'
 import { Button } from './styled'
 
 interface Props extends Params {}

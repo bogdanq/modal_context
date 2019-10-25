@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext, ModalRootProvider } from './lib/react-custom-modal'
-import { ContextModalType } from './lib/react-custom-modal/types'
+import { ModalContext, ModalRootProvider } from './lib/context-modal'
+import { ContextModalType } from './lib/context-modal/types'
 import {
   DefaultModal,
   ModalForTypes,
