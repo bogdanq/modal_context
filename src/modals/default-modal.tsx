@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalWrapper } from '../lib/react-custom-modal'
+import { Modal } from '../lib/react-custom-modal'
 import { Params } from '../lib/react-custom-modal/types'
 import { Button } from './styled'
 
@@ -7,7 +7,7 @@ interface Props extends Params {}
 
 export const DefaultModal = ({ ...params }: Props) => {
   return (
-    <ModalWrapper {...params}>
+    <Modal {...params}>
       {({ closeModal }) => {
         return (
           <div>
@@ -22,6 +22,6 @@ export const DefaultModal = ({ ...params }: Props) => {
           </div>
         )
       }}
-    </ModalWrapper>
+    </Modal>
   )
 }

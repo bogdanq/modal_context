@@ -1,6 +1,6 @@
 import React from 'react'
-import { ModalWrapper } from '../lib/react-custom-modal'
-import { ModalContext } from '../lib/react-custom-modal/ModalContext'
+import { Modal } from '../lib/react-custom-modal'
+import { ModalContext } from '../lib/react-custom-modal'
 import { ContextModalType } from '../lib/react-custom-modal/types'
 import { ModalForCustomAnimate } from './modal-for-animate'
 import { Params } from '../lib/react-custom-modal/types'
@@ -13,7 +13,7 @@ export const ModalForChildren = ({ ...params }: Props) => {
 
   return (
     <>
-      <ModalWrapper {...params}>
+      <Modal {...params}>
         {({ closeModal }) => (
           <div>
             <h1>Модальное окно с возможностью открыть дочернее окно</h1>
@@ -35,7 +35,7 @@ export const ModalForChildren = ({ ...params }: Props) => {
             </button>
           </div>
         )}
-      </ModalWrapper>
+      </Modal>
     </>
   )
 }

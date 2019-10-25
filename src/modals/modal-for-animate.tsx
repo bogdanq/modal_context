@@ -1,8 +1,11 @@
 import React from 'react'
-import { ModalWrapper, ModalContext } from '../lib/react-custom-modal'
+import { Modal, ModalContext } from '../lib/react-custom-modal'
 import { css, keyframes } from 'styled-components'
 import { Params } from '../lib/react-custom-modal/types'
-import { ContextModalType } from '../lib/react-custom-modal/types'
+import {
+  ContextModalType,
+  CustomLabelProps,
+} from '../lib/react-custom-modal/types'
 import { Button } from './styled'
 
 interface Props extends Params {
@@ -18,11 +21,13 @@ export const ModalForAnimate = ({
 }: Props) => {
   return (
     <>
-      <ModalWrapper
+      <Modal
         cookie={cookie}
         animationName={animationName}
         type={type}
         condition={condition}
+        labelText='Скрыть'
+        labelComponent={Label}
         {...params}
       >
         {({ closeModal }) => (
@@ -37,7 +42,16 @@ export const ModalForAnimate = ({
             <Button onClick={closeModal}>×</Button>
           </div>
         )}
-      </ModalWrapper>
+      </Modal>
+    </>
+  )
+}
+
+const Label = ({ htmlFor, toogleCookie, ...params }: CustomLabelProps) => {
+  return (
+    <>
+      <input {...params} onChange={toogleCookie} type='checkbox' />
+      <label htmlFor={htmlFor}>Больше не показывать</label>
     </>
   )
 }
@@ -63,7 +77,7 @@ export const ModalForCustomAnimate = ({
   const { showModal } = React.useContext<ContextModalType>(ModalContext)
   return (
     <>
-      <ModalWrapper
+      <Modal
         type={type}
         customAnimation={
           customAnimationName && animationCustomStyle[customAnimationName]
@@ -91,7 +105,7 @@ export const ModalForCustomAnimate = ({
             </button>
           </div>
         )}
-      </ModalWrapper>
+      </Modal>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalWrapper } from '../lib/react-custom-modal'
+import { Modal } from '../lib/react-custom-modal'
 import { css } from 'styled-components'
 import { Params } from '../lib/react-custom-modal/types'
 import { Button, Header, Text } from './styled'
@@ -21,7 +21,7 @@ const customStyle = css`
 export const ModalForCustomStyle = ({ ...params }: Props) => {
   return (
     <>
-      <ModalWrapper {...params} style={customStyle}>
+      <Modal {...params} style={customStyle}>
         {({ closeModal }) => (
           <>
             <Header>Модальное с кастомными стилями</Header>
@@ -36,7 +36,7 @@ export const ModalForCustomStyle = ({ ...params }: Props) => {
             <Button onClick={closeModal}>×</Button>
           </>
         )}
-      </ModalWrapper>
+      </Modal>
     </>
   )
 }

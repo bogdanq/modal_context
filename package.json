@@ -7,20 +7,15 @@
   "dependencies": {
     "@types/node": "12.6.2",
     "@types/react-dom": "^16.9.2",
-    "@types/react-modal": "3.8.2",
     "@types/styled-components": "4.1.18",
     "react": "16.8.6",
     "react-cookie": "4.0.1",
     "react-dom": "16.8.6",
-    "react-modal": "3.8.1",
-    "react-onclickoutside": "6.8.0",
     "react-scripts": "2.1.8",
-    "react-transition-group": "4.3.0",
-    "styled-components": "4.3.2",
-    "typescript": "3.2.4"
+    "styled-components": "4.3.2"
   },
   "devDependencies": {
-    "typescript": "3.3.3"
+    "typescript": "3.6.4"
   },
   "scripts": {
     "start": "react-scripts start",

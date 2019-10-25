@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalWrapper } from '../lib/react-custom-modal'
+import { Modal } from '../lib/react-custom-modal'
 import { css } from 'styled-components'
 import { Params } from '../lib/react-custom-modal/types'
 import { Button } from './styled'
@@ -9,7 +9,7 @@ interface Props extends Params {}
 export const ModalForTypes = ({ type, ...params }: Props) => {
   return (
     <>
-      <ModalWrapper {...params} type={type}>
+      <Modal {...params} type={type} labelText='Скрыть'>
         {({ closeModal }) => (
           <div>
             <h1>Модальное окно тип - {type}</h1>
@@ -22,7 +22,7 @@ export const ModalForTypes = ({ type, ...params }: Props) => {
             <Button onClick={closeModal}>×</Button>
           </div>
         )}
-      </ModalWrapper>
+      </Modal>
     </>
   )
 }
@@ -42,7 +42,7 @@ const customModalType = {
 export const ModalForCustomTypes = ({ type, ...params }: Props) => {
   return (
     <>
-      <ModalWrapper {...params} customTypeStyles={customModalType} type={type}>
+      <Modal {...params} customTypeStyles={customModalType} type={type}>
         {({ closeModal }) => (
           <div>
             <h1>Модальное окно с кастомным типом - {type}</h1>
@@ -55,7 +55,7 @@ export const ModalForCustomTypes = ({ type, ...params }: Props) => {
             <Button onClick={closeModal}>×</Button>
           </div>
         )}
-      </ModalWrapper>
+      </Modal>
     </>
   )
 }

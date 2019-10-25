@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalContext, ModalProvider } from './ModalContext'
+import { ModalContext, ModalProvider } from './modal-context'
 
 export const ModalRootProvider = ({
   children,

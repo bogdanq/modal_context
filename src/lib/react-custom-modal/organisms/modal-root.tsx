@@ -1,42 +1,35 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { useCookies } from 'react-cookie'
-import { StyledWrapper, StyledRootWrapper, ModalInner } from '../'
+import { StyledWrapper, StyledRootWrapper, ModalInner, Label } from '../'
 import { GlobalModalStyle } from '../atoms'
-import { ModalContext } from '../ModalContext'
-import { ModalWrapperProps, ContextModalType } from '../types'
+import { ModalContext } from '../modal-context'
+import {
+  ModalWrapperProps,
+  ContextModalType,
+  WithRoolesRenderProps,
+} from '../types'
 
-export const ModalWrapper = ({
+export const Modal = ({
   children,
-  type,
-  customTypeStyles,
-  style,
-  animationName,
-  customAnimation,
   cookie,
   id,
   condition,
+  labelText,
+  labelComponent,
+  style,
+  ...rest
 }: ModalWrapperProps) => {
   const { nodeList, currentNodeId, hideModal } = React.useContext<
     ContextModalType
   >(ModalContext)
 
-  const [cookies, setCookie, removeCookie] = useCookies()
+  const [cookies] = useCookies()
 
   const isFindCookieName = React.useMemo(
     () => getCookieName(cookies, cookie),
     [],
   )
-
-  const toogleCookie = React.useCallback(cookie => {
-    if (isFindCookieName) {
-      setCookie(cookie.name, true, {
-        maxAge: cookie.maxAge ? cookie.maxAge : 1000 * 60 * 15,
-      })
-    } else {
-      removeCookie(cookie.name)
-    }
-  }, [])
 
   const findId = React.useMemo(
     () => nodeList.findIndex(item => item.id === id),
@@ -58,30 +51,18 @@ export const ModalWrapper = ({
         >
           <StyledWrapper>
             <ModalInner
-              animationName={animationName}
-              customAnimation={customAnimation}
+              {...rest}
               customStyle={style}
-              customTypeStyles={customTypeStyles}
               isAnimated={findId !== findCurrentNodeId}
-              type={type}
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
               {children({ closeModal: () => hideModal(id) })}
-
-              {cookie && !cookie.isNotChange && (
-                <div>
-                  <input
-                    checked={Boolean(cookies[cookie.name])}
-                    onChange={() => toogleCookie(cookie)}
-                    type='checkbox'
-                    id={`isVisible_${cookie.name}`}
-                    name={`isVisible_${cookie.name}`}
-                  />
-                  <label htmlFor={`isVisible_${cookie.name}`}>
-                    Больше не показывать
-                  </label>
-                </div>
-              )}
+              <WithLabelRender
+                cookie={cookie}
+                labelText={labelText}
+                renderEmpty={Label}
+                renderExist={labelComponent}
+              />
             </ModalInner>
           </StyledWrapper>
           <GlobalModalStyle />
@@ -89,6 +70,40 @@ export const ModalWrapper = ({
       </ModalPortal>
     </>
   )
+}
+
+const WithLabelRender = ({
+  renderExist,
+  renderEmpty,
+  cookie,
+  labelText,
+}: WithRoolesRenderProps) => {
+  const [cookies, setCookie, removeCookie] = useCookies()
+
+  const toogleCookie = React.useCallback(
+    cookie => {
+      if (cookies[cookie.name]) {
+        removeCookie(cookie.name)
+      } else {
+        setCookie(cookie.name, true, {
+          maxAge: cookie.maxAge ? cookie.maxAge : 1000 * 60 * 15,
+        })
+      }
+    },
+    [cookies],
+  )
+
+  if (cookie) {
+    return renderExist
+      ? renderExist({
+          toogleCookie: () => toogleCookie(cookie),
+          id: cookie.name,
+          name: cookie.name,
+          htmlFor: cookie.name,
+        })
+      : renderEmpty({ labelText, cookie, toogleCookie })
+  }
+  return null
 }
 
 export const ModalPortal = ({
@@ -111,13 +126,12 @@ export const ModalPortal = ({
 
 const getCookieName = <T, U extends keyof T>(
   cookies: T,
-  cookie?: { name: U; isNotChange?: boolean } | null,
+  cookie?: { name: U } | null,
 ): boolean => {
   if (cookie) {
     if (cookies[cookie.name]) {
       return false
     }
   }
-
   return true
 }

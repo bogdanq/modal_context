@@ -37,12 +37,14 @@ interface ModalWrapperProps extends Params {
   style?: FlattenSimpleInterpolation
   animationName?: Animation
   customAnimation?: any
+  labelText?: string
+  labelComponent?: (params: CustomLabelProps) => React.ReactNode
 }
 
 export type GlobalModalStyleProps = {
   animationName?: Animation
   isAnimated?: boolean
-  customAnimation?: any
+  customAnimation?: FlattenSimpleInterpolation
 }
 
 type ModalInnerProps = {
@@ -50,8 +52,8 @@ type ModalInnerProps = {
   customTypeStyles?: ModalType
   customStyle?: FlattenSimpleInterpolation
   isAnimated?: boolean
-  animationName?: any
-  customAnimation?: any
+  animationName?: string
+  customAnimation?: FlattenSimpleInterpolation
 }
 
 export type Params = {
@@ -60,7 +62,6 @@ export type Params = {
   cookie?: {
     name: string
     maxAge?: number
-    isNotChange?: boolean
     showCount?: number
   }
   type?: keyof ModalType
@@ -81,3 +82,30 @@ export type ContextModalType = {
 }
 
 export type CurrentModal = { id: number; node: ReactNode }
+
+export type CustomLabelProps = {
+  toogleCookie:
+    | ((event: React.ChangeEvent<HTMLInputElement>) => void)
+    | undefined
+  id: string
+  name: string
+  htmlFor: string
+}
+
+export type Cookie = {
+  name: string
+  maxAge?: number
+}
+
+type LabelProps = {
+  labelText?: string
+  toogleCookie: (cookie: Cookie) => void
+  cookie: Cookie
+}
+
+export type WithRoolesRenderProps = {
+  renderExist?: (params: CustomLabelProps) => React.ReactNode
+  renderEmpty: (params: LabelProps) => any
+  cookie?: Cookie
+  labelText?: string
+}

@@ -19,25 +19,23 @@ const App = () => {
 
   React.useEffect(() => {
     showModal([
-      params => {
-        return (
-          <ModalForAnimate
-            {...params}
-            animationName='jackIn'
-            condition={() => true}
-            cookie={{
-              name: 'default_modal_0',
-            }}
-          />
-        )
-      },
       params => (
         <ModalForAnimate
           {...params}
-          animationName='translate'
+          animationName='jackIn'
+          condition={() => true}
+          cookie={{
+            name: 'default_modal_0',
+          }}
+        />
+      ),
+      params => (
+        <ModalForTypes
+          {...params}
+          animationName='rollin'
+          condition={() => true}
           cookie={{
             name: 'default_modal_1',
-            isNotChange: true,
           }}
         />
       ),
