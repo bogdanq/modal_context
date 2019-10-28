@@ -28,13 +28,13 @@
     "build:ts": "tsc"
   },
   "dependencies": {
-    "@types/styled-components": "4.1.18",
     "react-cookie": "^4.0.1",
     "styled-components": "4.3.2"
   },
   "devDependencies": {
     "@types/node": "12.11.7",
     "@types/react-dom": "16.9.3",
+    "@types/styled-components": "^4.1.20",
     "parcel-bundler": "1.12.4",
     "react": "16.11.0",
     "react-dom": "16.11.0",
