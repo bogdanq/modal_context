@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -8,14 +7,16 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "noEmit": true,
     "target": "es5",
     "jsx": "preserve",
-    "module": "commonjs",
-    "declaration": true,
-    "outDir": "./ts-built",
-    "rootDir": "src"
+    "module": "esnext",
+    "outDir": "dist",
+    "rootDir": "src/lib/context-modal",
+    "typeRoots": ["src/lib/context-modal/typings.d.ts"],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "isolatedModules": true
   },
   "exclude": ["node_modules"],
-  "include": ["src"]
+  "include": ["src/lib/context-modal"]
 }

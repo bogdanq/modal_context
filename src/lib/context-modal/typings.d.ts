@@ -1,18 +1,16 @@
 import React, { Dispatch } from 'react'
 import {
   FlattenSimpleInterpolation,
-  ThemedStyledFunction,
-  ThemeProps,
   FlattenInterpolation,
 } from 'styled-components'
 
-export type ModalType = {
+export declare type ModalType = {
   danger: FlattenInterpolation<any>
   success: FlattenInterpolation<any>
   primary: FlattenInterpolation<any>
 }
 
-export type AnimationType = {
+export declare type AnimationType = {
   scale: FlattenInterpolation<any>
   translate: FlattenInterpolation<any>
   rotate: FlattenInterpolation<any>
