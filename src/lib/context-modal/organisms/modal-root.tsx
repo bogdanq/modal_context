@@ -26,10 +26,10 @@ export const Modal = ({
 
   const [cookies] = useCookies()
 
-  const isFindCookieName = React.useMemo(() => getCookieName(cookies, cookie), [
-    cookies,
-    cookie,
-  ])
+  const isFindCookieName = React.useMemo(
+    () => getCookieName(cookies, cookie),
+    [],
+  )
 
   const findId = React.useMemo(
     () => nodeList.findIndex(item => item.id === id),

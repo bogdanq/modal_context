@@ -4,13 +4,13 @@ import {
   FlattenInterpolation,
 } from 'styled-components'
 
-export declare type ModalType = {
+export type ModalType = {
   danger: FlattenInterpolation<any>
   success: FlattenInterpolation<any>
   primary: FlattenInterpolation<any>
 }
 
-export declare type AnimationType = {
+export type AnimationType = {
   scale: FlattenInterpolation<any>
   translate: FlattenInterpolation<any>
   rotate: FlattenInterpolation<any>
@@ -29,7 +29,7 @@ export type Animation =
   | 'swing'
   | 'rollin'
 
-interface ModalWrapperProps extends Params {
+export interface ModalWrapperProps extends Params {
   children: (args: { closeModal: () => void }) => React.ReactNode
   type?: keyof ModalType
   customTypeStyles?: ModalType
@@ -46,7 +46,7 @@ export type GlobalModalStyleProps = {
   customAnimation?: FlattenSimpleInterpolation
 }
 
-type ModalInnerProps = {
+export type ModalInnerProps = {
   type?: keyof ModalType
   customTypeStyles?: ModalType
   customStyle?: FlattenSimpleInterpolation
@@ -96,7 +96,7 @@ export type Cookie = {
   maxAge?: number
 }
 
-type LabelProps = {
+export type LabelProps = {
   labelText?: string
   toogleCookie: (cookie: Cookie) => void
   cookie: Cookie

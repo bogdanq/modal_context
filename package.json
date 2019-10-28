@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@types/styled-components": "4.1.18",
-    "react-cookie": "4.0.1",
+    "react-cookie": "^4.0.1",
     "styled-components": "4.3.2"
   },
   "devDependencies": {
