@@ -13,8 +13,7 @@
     "outDir": "dist",
     "rootDir": "src/lib/context-modal",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "isolatedModules": true
+    "declaration": true
   },
   "exclude": ["node_modules"],
   "include": ["src/lib/context-modal"]
