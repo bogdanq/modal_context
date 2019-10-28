@@ -28,7 +28,8 @@ export const Modal = ({
 
   const isFindCookieName = React.useMemo(
     () => getCookieName(cookies, cookie),
-    [],
+    /* eslint-disable-next-line*/
+    [cookie],
   )
 
   const findId = React.useMemo(
@@ -48,6 +49,7 @@ export const Modal = ({
           onClick={() => hideModal(id)}
           cookie={cookie}
           id={id}
+          className='modal-portal'
         >
           <StyledWrapper>
             <ModalInner
@@ -115,10 +117,8 @@ export const ModalPortal = ({
   isFindCookieName: boolean
   condition?: () => boolean
 }) => {
-  const rootElement = document.querySelector('#modal')
-
-  if (rootElement && isFindCookieName && condition()) {
-    return ReactDOM.createPortal(children, rootElement)
+  if (isFindCookieName && condition()) {
+    return ReactDOM.createPortal(children, document.body)
   }
 
   return null

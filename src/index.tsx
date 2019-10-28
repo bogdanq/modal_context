@@ -28,7 +28,7 @@ const App = () => {
         />
       ),
     ])
-  }, [])
+  }, [showModal])
 
   return (
     <>
