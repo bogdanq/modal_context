@@ -24,7 +24,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel src/lib/context-modal --extensions \".ts,.tsx\" --out-dir dist/cjs",
     "demo": "parcel --out-dir demo/dist demo/index.html",
     "build:ts": "tsc"
   },
@@ -34,14 +33,6 @@
     "styled-components": "4.3.2"
   },
   "devDependencies": {
-    "@babel/cli": "7.6.4",
-    "@babel/core": "7.6.4",
-    "@babel/plugin-syntax-typescript": "7.3.3",
-    "@babel/plugin-transform-modules-commonjs": "7.6.0",
-    "@babel/plugin-transform-runtime": "7.6.2",
-    "@babel/plugin-transform-typescript": "7.6.3",
-    "@babel/preset-env": "7.6.3",
-    "@babel/preset-react": "7.6.3",
     "@types/node": "12.11.7",
     "@types/react-dom": "16.9.3",
     "parcel-bundler": "1.12.4",
