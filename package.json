@@ -2,7 +2,7 @@
   "name": "context-react-modal",
   "version": "1.0.3",
   "description": "Wrapper for context modals",
-  "main": "dist/cjs/index.js",
+  "main": "dist/index.js",
   "keywords": [
     "react",
     "react-component",
