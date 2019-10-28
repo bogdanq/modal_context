@@ -12,7 +12,6 @@
     "module": "esnext",
     "outDir": "dist",
     "rootDir": "src/lib/context-modal",
-    "typeRoots": ["src/lib/context-modal/typings.d.ts"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "isolatedModules": true
