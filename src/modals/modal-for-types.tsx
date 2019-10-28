@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal } from '../lib/context-modal'
 import { css } from 'styled-components'
-import { Params } from '../lib/context-modal/types'
+import { Params } from '../lib/context-modal/typings'
 import { Button } from './styled'
 
 interface Props extends Params {}

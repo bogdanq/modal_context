@@ -8,7 +8,7 @@ import {
   ModalWrapperProps,
   ContextModalType,
   WithRoolesRenderProps,
-} from '../types'
+} from '../typings'
 
 export const Modal = ({
   children,

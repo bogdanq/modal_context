@@ -3,22 +3,23 @@ import {
   FlattenSimpleInterpolation,
   ThemedStyledFunction,
   ThemeProps,
+  FlattenInterpolation,
 } from 'styled-components'
 
 export type ModalType = {
-  danger: FlattenInterpolation
-  success: FlattenInterpolation
-  primary: FlattenInterpolation
+  danger: FlattenInterpolation<any>
+  success: FlattenInterpolation<any>
+  primary: FlattenInterpolation<any>
 }
 
 export type AnimationType = {
-  scale: FlattenInterpolation
-  translate: FlattenInterpolation
-  rotate: FlattenInterpolation
-  jackIn: FlattenInterpolation
-  rubber: FlattenInterpolation
-  swing: FlattenInterpolation
-  rollin: FlattenInterpolation
+  scale: FlattenInterpolation<any>
+  translate: FlattenInterpolation<any>
+  rotate: FlattenInterpolation<any>
+  jackIn: FlattenInterpolation<any>
+  rubber: FlattenInterpolation<any>
+  swing: FlattenInterpolation<any>
+  rollin: FlattenInterpolation<any>
 }
 
 export type Animation =
@@ -68,7 +69,7 @@ export type Params = {
   animationName?: Animation
 }
 
-export type RenderNodeModal = (arg: { id: number }) => ReactNode
+export type RenderNodeModal = (arg: { id: number }) => React.ReactNode
 export type ShowModal = <T extends RenderNodeModal | Array<RenderNodeModal>>(
   renderNodeModal: T,
 ) => void
@@ -81,7 +82,7 @@ export type ContextModalType = {
   setCurrentNodeId: Dispatch<any>
 }
 
-export type CurrentModal = { id: number; node: ReactNode }
+export type CurrentModal = { id: number; node: React.ReactNode }
 
 export type CustomLabelProps = {
   toogleCookie:

@@ -19,6 +19,7 @@
   },
   "bugs": "https://github.com/bogdanq/modal_context/issues",
   "homepage": "https://github.com/bogdanq/modal_context",
+  "types": "src/lib/context-modal/typings.d.ts",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

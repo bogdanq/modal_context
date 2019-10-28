@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react'
-import { ContextModalType, CurrentModal } from './types'
+import { ContextModalType, CurrentModal } from './typings'
 
 const ModalContext = React.createContext<ContextModalType>({
   showModal: () => null,

@@ -1,4 +1,4 @@
-import { ModalType, Animation } from './types'
+import { ModalType, Animation } from './typings'
 
 type PropsName = {
   type: keyof ModalType

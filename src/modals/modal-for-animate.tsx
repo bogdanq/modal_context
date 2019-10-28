@@ -1,8 +1,11 @@
 import React from 'react'
 import { Modal, ModalContext } from '../lib/context-modal'
 import { css, keyframes } from 'styled-components'
-import { Params } from '../lib/context-modal/types'
-import { ContextModalType, CustomLabelProps } from '../lib/context-modal/types'
+import { Params } from '../lib/context-modal/typings'
+import {
+  ContextModalType,
+  CustomLabelProps,
+} from '../lib/context-modal/typings'
 import { Button } from './styled'
 
 interface Props extends Params {

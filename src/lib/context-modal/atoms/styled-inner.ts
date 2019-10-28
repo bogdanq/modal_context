@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { getStyle } from '../styled-components-layout'
 import { translateOut, translateIn, animationStyle } from './animate-styled'
-import { ModalInnerProps } from '../types'
+import { ModalInnerProps } from '../typings'
 import { Button } from './styled-root-wrapper'
 
 const modalType = {

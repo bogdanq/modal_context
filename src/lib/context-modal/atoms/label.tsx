@@ -1,6 +1,6 @@
 import React from 'react'
 import { useCookies } from 'react-cookie'
-import { Cookie } from '../types'
+import { Cookie } from '../typings'
 
 type Props = {
   labelText?: string
