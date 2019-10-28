@@ -11,12 +11,10 @@ import {
   ModalForCustomStyle,
   ModalForChildren,
 } from './modals'
-import './styles.css'
 import styled from 'styled-components'
 
 const App = () => {
   const { showModal } = React.useContext<ContextModalType>(ModalContext)
-
   React.useEffect(() => {
     showModal([
       params => (
@@ -26,16 +24,6 @@ const App = () => {
           condition={() => true}
           cookie={{
             name: 'default_modal_0',
-          }}
-        />
-      ),
-      params => (
-        <ModalForTypes
-          {...params}
-          animationName='rollin'
-          condition={() => true}
-          cookie={{
-            name: 'default_modal_1',
           }}
         />
       ),

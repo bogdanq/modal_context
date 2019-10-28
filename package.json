@@ -2,6 +2,7 @@
   "name": "context-react-modal",
   "version": "1.0.0",
   "description": "Wrapper for context modals",
+  "main": "dist/cjs/index.js",
   "keywords": [
     "react",
     "react-component",
@@ -18,25 +19,36 @@
   },
   "bugs": "https://github.com/bogdanq/modal_context/issues",
   "homepage": "https://github.com/bogdanq/modal_context",
-  "main": "src/index.js",
-  "dependencies": {
-    "@types/node": "12.6.2",
-    "@types/react-dom": "^16.9.2",
-    "@types/styled-components": "4.1.18",
-    "react": "16.8.6",
-    "react-cookie": "4.0.1",
-    "react-dom": "16.8.6",
-    "react-scripts": "2.1.8",
-    "styled-components": "4.3.2"
-  },
-  "devDependencies": {
-    "typescript": "3.6.4"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:cjs": "cross-env BABEL_ENV=cjs babel src/lib/context-modal --extensions \".ts,.tsx\" --out-dir dist/cjs",
+    "demo": "parcel --out-dir demo/dist demo/index.html",
+    "build:ts": "tsc"
+  },
+  "dependencies": {
+    "@types/styled-components": "4.1.18",
+    "react-cookie": "4.0.1",
+    "styled-components": "4.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.6.4",
+    "@babel/core": "7.6.4",
+    "@babel/plugin-syntax-typescript": "7.3.3",
+    "@babel/plugin-transform-modules-commonjs": "7.6.0",
+    "@babel/plugin-transform-runtime": "7.6.2",
+    "@babel/plugin-transform-typescript": "7.6.3",
+    "@babel/preset-env": "7.6.3",
+    "@babel/preset-react": "7.6.3",
+    "@types/node": "12.11.7",
+    "@types/react-dom": "16.9.3",
+    "parcel-bundler": "1.12.4",
+    "react": "16.11.0",
+    "react-dom": "16.11.0",
+    "react-scripts": "3.2.0",
+    "typescript": "3.6.4"
   },
   "browserslist": [
     ">0.2%",

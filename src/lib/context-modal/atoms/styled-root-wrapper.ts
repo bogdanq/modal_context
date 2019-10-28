@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 
-export const StyledRootWrapper = styled.div<{
+type Props = {
   cookie?: { name: string; maxAge?: number }
   id?: any
-}>`
+}
+
+export const StyledRootWrapper = styled.div<Props>`
   overflow-x: hidden;
   overflow-y: auto;
   top: 0;

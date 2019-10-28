@@ -63,7 +63,7 @@ export const useStack = () => {
 
     if (Array.isArray(data)) {
       data.map((node: ReactNode, index) => {
-        setNodeList(prev => [...prev, { id: index, node }])
+        return setNodeList(prev => [...prev, { id: index, node }])
       })
     }
   }

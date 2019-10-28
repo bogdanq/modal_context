@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "es5",
     "lib": [
       "dom",
       "dom.iterable",
@@ -12,13 +11,19 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "target": "es5",
+    "jsx": "preserve",
+    "module": "esnext",
+    "outDir": "ts-built",
+    "rootDir": "src"
   },
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     "src"
   ]
