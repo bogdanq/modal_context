@@ -2,6 +2,7 @@ import React, { Dispatch } from 'react'
 import {
   FlattenSimpleInterpolation,
   FlattenInterpolation,
+  ThemedStyledProps,
 } from 'styled-components'
 
 export type ModalType = {
@@ -29,15 +30,19 @@ export type Animation =
   | 'swing'
   | 'rollin'
 
+type CustomAnimationType = FlattenInterpolation<
+  ThemedStyledProps<{ isAnimated?: boolean }, any>
+>
+
 export interface ModalWrapperProps extends Params {
-  children: (args: { closeModal: () => void }) => React.ReactNode
+  children: (props: { closeModal: () => void }) => React.ReactNode
   type?: keyof ModalType
   customTypeStyles?: ModalType
   style?: FlattenSimpleInterpolation
   animationName?: Animation
-  customAnimation?: any
+  customAnimation?: CustomAnimationType
   labelText?: string
-  labelComponent?: (params: CustomLabelProps) => React.ReactNode
+  labelComponent?: (props: CustomLabelProps) => React.ReactNode
 }
 
 export type GlobalModalStyleProps = {
@@ -51,8 +56,8 @@ export type ModalInnerProps = {
   customTypeStyles?: ModalType
   customStyle?: FlattenSimpleInterpolation
   isAnimated?: boolean
-  animationName?: string
-  customAnimation?: FlattenSimpleInterpolation
+  animationName?: Animation
+  customAnimation?: CustomAnimationType
 }
 
 export type Params = {
@@ -65,9 +70,10 @@ export type Params = {
   }
   type?: keyof ModalType
   animationName?: Animation
+  customAnimationName?: string
 }
 
-export type RenderNodeModal = (arg: { id: number }) => React.ReactNode
+export type RenderNodeModal = (props: { id: number }) => React.ReactNode
 export type ShowModal = <T extends RenderNodeModal | Array<RenderNodeModal>>(
   renderNodeModal: T,
 ) => void

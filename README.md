@@ -15,21 +15,21 @@ To install, you can use [npm](https://npmjs.org/):
 
 ## API documentation
 
-|        Props         |               Type               | Default | required |
-| :------------------: | :------------------------------: | :-----: | :------: |
-|     [`children`]     |            ReactNode             |  null   |   true   |
-|       [`type`]       | [`danger`, `success`, `primary`] |  null   |  false   |
-| [`customTypeStyles`] |                                  |         |          |
-|      [`style`]       |                                  |         |          |
-|  [`animationName`]   |                                  |         |          |
-| [`customAnimation`]  |                                  |         |          |
-|    [`labelText`]     |                                  |         |          |
-|  [`labelComponent`]  |                                  |         |          |
-|        [`id`]        |                                  |         |          |
-|    [`condition`]     |                                  |         |          |
-|      [`cookie`]      |                                  |         |          |
-|  [`cookie => name`]  |                                  |         |          |
-| [`cookie => maxAge`] |                                  |         |          |
+|       Props        |                                       Type                                       | Default | required |
+| :----------------: | :------------------------------------------------------------------------------: | :-----: | :------: |
+|     `children`     |                                    ReactNode                                     |  null   |   true   |
+|       `type`       |                    string - [`danger` , `success`, `primary`]                    |  null   |  false   |
+| `customTypeStyles` |             FlattenInterpolation - {`danger` , `success`, `primary`}             |         |  false   |
+|      `style`       |                               FlattenInterpolation                               |         |  false   |
+|  `animationName`   | string - [`jackIn`, `rubber`, `swing`, `rotate`, `translate`, `scale`, `rollin`] |         |  false   |
+| `customAnimation`  |     `FlattenInterpolation<ThemedStyledProps<{ isAnimated?: boolean }, any>>`     |         |  false   |
+|    `labelText`     |                                      string                                      |         |   fale   |
+|  `labelComponent`  |                      (props: CustomLabelProps) => ReactNode                      |         |  false   |
+|        `id`        |                                      number                                      |         |   true   |
+|    `condition`     |                                  () => boolean                                   |         |  false   |
+|      `cookie`      |                                      object                                      |         |  false   |
+|  `cookie => name`  |                                      string                                      |         |   true   |
+| `cookie => maxAge` |                                  number - `sec`                                  |         |  false   |
 
 ## Examples
 
@@ -134,7 +134,7 @@ const zoomIn = keyframes`
     transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
   }
-`;
+`
 
 const scaleOut = keyframes`
   0% {
@@ -145,7 +145,7 @@ const scaleOut = keyframes`
     opacity: 0.5;
     transform: scale(0.5)
   }
-`;
+`
 
 export const ModalForCustomAnimate = ({ customAnimationName, ...params }) => {
   return (
