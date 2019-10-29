@@ -75,8 +75,8 @@ import { ModalContext, ModalRootProvider, Modal } from 'context-react-modal'
 
 const ModalForAnimate = ({ animationName, ...params }) => {
   return (
-    <>
-      <Modal cookie={cookie} animationName={animationName} {...params}>
+    <div>
+      <Modal animationName={animationName} {...params}>
         {({ closeModal }) => (
           <>
             <h1>Modal for amimation - {animationName}</h1>
@@ -103,7 +103,7 @@ const App = () => {
       >
         Try me!
       </button>
-    </>
+    </div>
   )
 }
 ```
@@ -123,9 +123,33 @@ const animationCustomStyle = {
   `,
 }
 
+const zoomIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+`;
+
+const scaleOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: scale(1)
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(0.5)
+  }
+`;
+
 export const ModalForCustomAnimate = ({ customAnimationName, ...params }) => {
   return (
-    <>
+    <div>
       <Modal
         customAnimation={
           customAnimationName && animationCustomStyle[customAnimationName]
@@ -139,7 +163,7 @@ export const ModalForCustomAnimate = ({ customAnimationName, ...params }) => {
           </>
         )}
       </Modal>
-    </>
+    </div>
   )
 }
 
@@ -147,7 +171,7 @@ const App = () => {
   const { showModal } = React.useContext(ModalContext)
 
   return (
-    <>
+    <div>
       <h1>Parent component</h1>
       <button
         onClick={() => {
@@ -158,7 +182,7 @@ const App = () => {
       >
         Try me!
       </button>
-    </>
+    </div>
   )
 }
 ```
@@ -174,7 +198,7 @@ const App = () => {
   const { showModal } = React.useContext(ModalContext)
 
   return (
-    <>
+    <div>
       <h1>Default modal</h1>
       <button
         onClick={() => {
@@ -183,7 +207,7 @@ const App = () => {
       >
         Try me!
       </button>
-    </>
+    </div>
   )
 }
 ```
