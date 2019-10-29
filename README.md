@@ -15,36 +15,54 @@ To install, you can use [npm](https://npmjs.org/):
 
 ## API documentation
 
-|       Props        |                                       Type                                       | Default | required |
-| :----------------: | :------------------------------------------------------------------------------: | :-----: | :------: |
-|     `children`     |                                    ReactNode                                     |  null   |   true   |
-|       `type`       |                    string - [`danger` , `success`, `primary`]                    |  null   |  false   |
-| `customTypeStyles` |             FlattenInterpolation - {`danger` , `success`, `primary`}             |         |  false   |
-|      `style`       |                               FlattenInterpolation                               |         |  false   |
-|  `animationName`   | string - [`jackIn`, `rubber`, `swing`, `rotate`, `translate`, `scale`, `rollin`] |         |  false   |
-| `customAnimation`  |     `FlattenInterpolation<ThemedStyledProps<{ isAnimated?: boolean }, any>>`     |         |  false   |
-|    `labelText`     |                                      string                                      |         |   fale   |
-|  `labelComponent`  |                      (props: CustomLabelProps) => ReactNode                      |         |  false   |
-|        `id`        |                                      number                                      |         |   true   |
-|    `condition`     |                                  () => boolean                                   |         |  false   |
-|      `cookie`      |                                      object                                      |         |  false   |
-|  `cookie => name`  |                                      string                                      |         |   true   |
-| `cookie => maxAge` |                                  number - `sec`                                  |         |  false   |
+|       Props        |                                   Type                                   | required | required                              |
+| :----------------: | :----------------------------------------------------------------------: | :------: | ------------------------------------- |
+|     `children`     |                                ReactNode                                 |   true   |                                       |
+|       `type`       |                    string - danger , success, primary                    |  false   | [example-types](#example-types)       |
+| `customTypeStyles` |         FlattenInterpolation - key: { danger , success,primary }         |  false   | [custom-types](#custom-types)         |
+|      `style`       |                           FlattenInterpolation                           |  false   | [custom-style](#custom-style)         |
+|  `animationName`   |     string - jackIn, rubber, swing, rotate, translate, scale, rollin     |  false   | [Animations](#animations)             |
+| `customAnimation`  | `FlattenInterpolation<ThemedStyledProps<{ isAnimated?: boolean }, any>>` |  false   | [Custom animation](#custom-animation) |
+|    `labelText`     |                                  string                                  |  false   |                                       |
+|  `labelComponent`  |                  (props: CustomLabelProps) => ReactNode                  |  false   | [label component](#label-component)   |
+|        `id`        |                                  number                                  |   true   |                                       |
+|    `condition`     |                              () => boolean                               |  false   |                                       |
+|      `cookie`      |                                  object                                  |  false   | [Array modals](#array-modals)         |
+|  `cookie => name`  |                                  string                                  |   true   |                                       |
+| `cookie => maxAge` |                              number - `sec`                              |  false   |                                       |
 
 ## Examples
 
-### Default modal
+### You can use modal with typescript
 
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext, ModalRootProvider, Modal } from 'context-react-modal'
+import {
+  ModalContext,
+  ModalRootProvider,
+  Modal,
+  ContextModalType,
+  Params,
+  CustomLabelProps,
+} from 'context-react-modal'
 
-const App = () => {
-  const { showModal } = React.useContext(ModalContext)
+interface Props extends Params {}
 
+const Label = ({ htmlFor, toogleCookie, ...params }: CustomLabelProps) => {
   return (
     <>
+      <input {...params} onChange={toogleCookie} type='checkbox' />
+      <label htmlFor={htmlFor}>do not show</label>
+    </>
+  )
+}
+
+const App = ({  }: Props) => {
+  const { showModal } = React.useContext < ContextModalType > ModalContext
+
+  return (
+    <div>
       <h1>Default modal</h1>
       <button
         onClick={() => {
@@ -53,7 +71,7 @@ const App = () => {
       >
         Try me!
       </button>
-    </>
+    </div>
   )
 }
 
@@ -66,25 +84,62 @@ ReactDOM.render(
 )
 ```
 
-### Modal for animations
+### example-types
+
+```jsx
+import React from 'react'
+import { ModalContext, Modal } from 'context-react-modal'
+
+const App = () => {
+  const { showModal } = React.useContext(ModalContext)
+
+  return (
+    <div>
+      <h1>Default modal</h1>
+      <button
+        onClick={() => {
+          showModal(params => <Modal {...params} />)
+        }}
+      >
+        Try me!
+      </button>
+    </div>
+  )
+}
+```
+
+### custom-types
 
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext, ModalRootProvider, Modal } from 'context-react-modal'
+import { ModalContext } from 'context-react-modal'
 
-const ModalForAnimate = ({ animationName, ...params }) => {
+const customModalType = {
+  danger: css`
+    background: #f37b7b;
+  `,
+  success: css`
+    background: blueviolet;
+  `,
+  primary: css`
+    background: orange;
+  `,
+}
+
+export const ModalForCustomTypes = ({ type, ...params }: Props) => {
   return (
     <div>
-      <Modal animationName={animationName} {...params}>
+      <Modal {...params} customTypeStyles={customModalType} type={type}>
         {({ closeModal }) => (
-          <>
-            <h1>Modal for amimation - {animationName}</h1>
-            <button onClick={closeModal}>Close</button>
-          </>
+          <div>
+            <h1>Modal with custom type</h1>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam consectetur
+            <Button onClick={closeModal}>×</Button>
+          </div>
         )}
       </Modal>
-    </>
+    </div>
   )
 }
 
@@ -92,7 +147,104 @@ const App = () => {
   const { showModal } = React.useContext(ModalContext)
 
   return (
-    <>
+    <div>
+      <h1>Modal with custom types</h1>
+      <button
+        onClick={() => {
+          showModal(params => (
+            <ModalForCustomTypes {...params} type='success' />
+          ))
+        }}
+      >
+        Try me!
+      </button>
+    </div>
+  )
+}
+```
+
+### custom-style
+
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { ModalContext } from 'context-react-modal'
+
+const customStyle = css`
+  background: #fff;
+  width: 500px;
+  border-radius: inherit;
+  font-size: 1rem;
+  padding: 0;
+  padding-bottom: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+`
+
+export const ModalForCustomStyle = ({ ...params }: Props) => {
+  return (
+    <div>
+      <Modal {...params} style={customStyle}>
+        {({ closeModal }) => (
+          <>
+            <Header>Modal with custom style</Header>
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+              consectetur euismod erat. Sed imperdiet sollicitudin urna non
+            </Text>
+            <Button onClick={closeModal}>×</Button>
+          </>
+        )}
+      </Modal>
+    </div>
+  )
+}
+const App = () => {
+  const { showModal } = React.useContext(ModalContext)
+
+  return (
+    <div>
+      <h1>Modal with custom types</h1>
+      <button
+        onClick={() => {
+          showModal(params => <ModalForCustomStyle {...params} />)
+        }}
+      >
+        Try me!
+      </button>
+    </div>
+  )
+}
+```
+
+### Animations
+
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { ModalContext, Modal } from 'context-react-modal'
+
+const ModalForAnimate = ({ animationName, ...params }) => {
+  return (
+    <div>
+      <Modal animationName={animationName} {...params}>
+        {({ closeModal }) => (
+          <>
+            <h1>Modal with amimation - {animationName}</h1>
+            <button onClick={closeModal}>Close</button>
+          </>
+        )}
+      </Modal>
+    </div>
+  )
+}
+
+const App = () => {
+  const { showModal } = React.useContext(ModalContext)
+
+  return (
+    <div>
       <h1>Default modal</h1>
       <button
         onClick={() => {
@@ -108,12 +260,12 @@ const App = () => {
 }
 ```
 
-### Modal for custom animation
+### Custom animation
 
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext, ModalRootProvider, Modal } from 'context-react-modal'
+import { ModalContext, Modal } from 'context-react-modal'
 
 const animationCustomStyle = {
   zoom: css`
@@ -151,14 +303,12 @@ export const ModalForCustomAnimate = ({ customAnimationName, ...params }) => {
   return (
     <div>
       <Modal
-        customAnimation={
-          customAnimationName && animationCustomStyle[customAnimationName]
-        }
+        customAnimation={animationCustomStyle[customAnimationName]}
         {...params}
       >
         {({ closeModal }) => (
           <>
-            <h1>Modal for custom animation - scale</h1>
+            <h1>Modal with custom animation - scale</h1>
             <button onClick={closeModal}>Close</button>
           </>
         )}
@@ -187,22 +337,31 @@ const App = () => {
 }
 ```
 
-### Modal for types
+### label component
 
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext, ModalRootProvider, Modal } from 'context-react-modal'
+import { ModalContext, Modal } from 'context-react-modal'
+
+const Label = ({ htmlFor, toogleCookie, ...params }) => {
+  return (
+    <>
+      <input {...params} onChange={toogleCookie} type='checkbox' />
+      <label htmlFor={htmlFor}>do not show</label>
+    </>
+  )
+}
 
 const App = () => {
   const { showModal } = React.useContext(ModalContext)
 
   return (
     <div>
-      <h1>Default modal</h1>
+      <h1>Custom label component</h1>
       <button
         onClick={() => {
-          showModal(params => <Modal {...params} type='success' />)
+          showModal(params => <Modal {...params} labelComponent={Label} />)
         }}
       >
         Try me!
@@ -217,7 +376,7 @@ const App = () => {
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext, ModalRootProvider, Modal } from 'context-react-modal'
+import { ModalContext, Modal } from 'context-react-modal'
 
 const App = () => {
   const { showModal } = React.useContext(ModalContext)
