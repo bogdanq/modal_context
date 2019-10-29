@@ -51,10 +51,10 @@ interface Props extends Params {}
 
 const Label = ({ htmlFor, toogleCookie, ...params }: CustomLabelProps) => {
   return (
-    <>
+    <div>
       <input {...params} onChange={toogleCookie} type='checkbox' />
       <label htmlFor={htmlFor}>do not show</label>
-    </>
+    </div>
   )
 }
 
@@ -187,14 +187,14 @@ export const ModalForCustomStyle = ({ ...params }: Props) => {
     <div>
       <Modal {...params} style={customStyle}>
         {({ closeModal }) => (
-          <>
+          <div>
             <Header>Modal with custom style</Header>
             <Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
               consectetur euismod erat. Sed imperdiet sollicitudin urna non
             </Text>
             <Button onClick={closeModal}>×</Button>
-          </>
+          </div>
         )}
       </Modal>
     </div>
@@ -230,10 +230,10 @@ const ModalForAnimate = ({ animationName, ...params }) => {
     <div>
       <Modal animationName={animationName} {...params}>
         {({ closeModal }) => (
-          <>
+          <div>
             <h1>Modal with amimation - {animationName}</h1>
             <button onClick={closeModal}>Close</button>
-          </>
+          </div>
         )}
       </Modal>
     </div>
@@ -307,10 +307,10 @@ export const ModalForCustomAnimate = ({ customAnimationName, ...params }) => {
         {...params}
       >
         {({ closeModal }) => (
-          <>
+          <div>
             <h1>Modal with custom animation - scale</h1>
             <button onClick={closeModal}>Close</button>
-          </>
+          </div>
         )}
       </Modal>
     </div>
@@ -346,10 +346,10 @@ import { ModalContext, Modal } from 'context-react-modal'
 
 const Label = ({ htmlFor, toogleCookie, ...params }) => {
   return (
-    <>
+    <div>
       <input {...params} onChange={toogleCookie} type='checkbox' />
       <label htmlFor={htmlFor}>do not show</label>
-    </>
+    </div>
   )
 }
 
