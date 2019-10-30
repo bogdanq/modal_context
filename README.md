@@ -31,15 +31,10 @@ const App = () => {
             <Modal
               animationName='swing'
               condition={() => (10 > 20 ? true : false)}
-              labelText='some label text'
-              labelComponent={Label}
               closeTimeout={400}
-              cookie={{
-                name: 'modal_1',
-              }}
               {...params}
             >
-              Some modal
+              {({ closeModal }) => Some modal}
             </Modal>
           ))
         }}
