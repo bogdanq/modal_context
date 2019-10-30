@@ -15,8 +15,6 @@ To install, you can use [npm](https://npmjs.org/):
 
 ## Usage
 
-### You can use modal with typescript
-
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
