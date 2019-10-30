@@ -58,6 +58,7 @@ export type ModalInnerProps = {
   isAnimated?: boolean
   animationName?: Animation
   customAnimation?: CustomAnimationType
+  closeTimeout?: number
 }
 
 export type Params = {
@@ -71,6 +72,7 @@ export type Params = {
   type?: keyof ModalType
   animationName?: Animation
   customAnimationName?: string
+  closeTimeout?: number
 }
 
 export type RenderNodeModal = (props: { id: number }) => React.ReactNode
@@ -81,12 +83,16 @@ export type ShowModal = <T extends RenderNodeModal | Array<RenderNodeModal>>(
 export type ContextModalType = {
   showModal: ShowModal
   hideModal: (id: number) => void
-  nodeList: Array<any>
+  nodeList: Array<CurrentModal>
   currentNodeId: number | null
   setCurrentNodeId: Dispatch<any>
+  setCloseTimeout: Dispatch<any>
 }
 
-export type CurrentModal = { id: number; node: React.ReactNode }
+export type CurrentModal = {
+  id: number
+  node: (props: { id: number; key: number }) => React.ReactNode
+}
 
 export type CustomLabelProps = {
   toogleCookie:

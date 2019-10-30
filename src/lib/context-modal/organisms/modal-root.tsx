@@ -18,11 +18,19 @@ export const Modal = ({
   labelText,
   labelComponent,
   style,
+  closeTimeout,
   ...rest
 }: ModalWrapperProps) => {
-  const { nodeList, currentNodeId, hideModal } = React.useContext<
-    ContextModalType
-  >(ModalContext)
+  const {
+    nodeList,
+    currentNodeId,
+    hideModal,
+    setCloseTimeout,
+  } = React.useContext<ContextModalType>(ModalContext)
+
+  React.useEffect(() => {
+    setCloseTimeout(closeTimeout ? closeTimeout : 400)
+  }, [closeTimeout, setCloseTimeout])
 
   const [cookies] = useCookies()
 
@@ -54,6 +62,7 @@ export const Modal = ({
           <StyledWrapper>
             <ModalInner
               {...rest}
+              closeTimeout={closeTimeout}
               customStyle={style}
               isAnimated={findId !== findCurrentNodeId}
               onClick={(e: React.MouseEvent) => e.stopPropagation()}

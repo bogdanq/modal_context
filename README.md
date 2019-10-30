@@ -15,21 +15,30 @@ To install, you can use [npm](https://npmjs.org/):
 
 ## API documentation
 
-|       Props        |                                  Type                                  | required | examples                              |
-| :----------------: | :--------------------------------------------------------------------: | :------: | ------------------------------------- |
-|     `children`     |                               ReactNode                                |   true   |                                       |
-|       `type`       |                   string - danger , success, primary                   |  false   | [example-types](#example-types)       |
-| `customTypeStyles` |        FlattenInterpolation - key: { danger , success,primary }        |  false   | [custom-types](#custom-types)         |
-|      `style`       |                          FlattenInterpolation                          |  false   | [custom-style](#custom-style)         |
-|  `animationName`   |    string - jackIn, rubber, swing, rotate, translate, scale, rollin    |  false   | [Animations](#animations)             |
-| `customAnimation`  | FlattenInterpolation<ThemedStyledProps<{ isAnimated?: boolean }, any>> |  false   | [Custom animation](#custom-animation) |
-|    `labelText`     |                                 string                                 |  false   |                                       |
-|  `labelComponent`  |                 (props: CustomLabelProps) => ReactNode                 |  false   | [label component](#label-component)   |
-|        `id`        |                                 number                                 |   true   |                                       |
-|    `condition`     |                             () => boolean                              |  false   |                                       |
-|      `cookie`      |                                 object                                 |  false   | [Array modals](#array-modals)         |
-|  `cookie => name`  |                                 string                                 |   true   |                                       |
-| `cookie => maxAge` |                             number - `sec`                             |  false   |                                       |
+|       Props        |                                  Type                                  | required |               examples                |              description               |
+| :----------------: | :--------------------------------------------------------------------: | :------: | :-----------------------------------: | :------------------------------------: |
+|     `children`     |                               ReactNode                                |   true   |                                       |                                        |
+|       `type`       |                   string - danger , success, primary                   |  false   |    [example-types](#example-types)    |                                        |
+| `customTypeStyles` |        FlattenInterpolation - key: { danger , success,primary }        |  false   |     [custom-types](#custom-types)     |                                        |
+|      `style`       |                          FlattenInterpolation                          |  false   |     [custom-style](#custom-style)     |                                        |
+|  `animationName`   |    string - jackIn, rubber, swing, rotate, translate, scale, rollin    |  false   |       [Animations](#animations)       |                                        |
+| `customAnimation`  | FlattenInterpolation<ThemedStyledProps<{ isAnimated?: boolean }, any>> |  false   | [Custom animation](#custom-animation) |                                        |
+|    `labelText`     |                                 string                                 |  false   |                                       |                                        |
+|  `labelComponent`  |                 (props: CustomLabelProps) => ReactNode                 |  false   |  [label component](#label-component)  |                                        |
+|        `id`        |                                 number                                 |   true   |                                       |                                        |
+|    `condition`     |                             () => boolean                              |  false   |                                       | your condition to render the component |
+|      `cookie`      |                                 object                                 |  false   |     [Array modals](#array-modals)     |                                        |
+|  `cookie => name`  |                                 string                                 |   true   |                                       |                                        |
+| `cookie => maxAge` |                             number - `MS`                              |  false   |                                       |          cookie lifetime - ms          |
+|   `closeTimeout`   |                             number - `MS`                              |  false   |                                       | time to remove a component - ms (400)  |
+
+|      Context      |                                         Type                                         |     description      |
+| :---------------: | :----------------------------------------------------------------------------------: | :------------------: |
+|    `showModal`    |  `<T extends RenderNodeModal | Array<RenderNodeModal>>(renderNodeModal: T) => void`  | modal open function  |
+|    `hideModal`    |                                 (id: number) => void                                 | modal close request  |
+|    `nodeList`     | Array<{ id: number, node: node: (props: { id: number; key: number }) => ReactNode }> |    opened modals     |
+|  `currentNodeId`  |                                        number                                        |   id active modal    |
+| `renderNodeModal` |             RenderNodeModal = (props: { id: number }) => React.ReactNode             | modal component type |
 
 ## Examples
 
