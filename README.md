@@ -13,6 +13,63 @@ To install, you can use [npm](https://npmjs.org/):
 
     $ npm install context-react-modal
 
+## Usage
+
+### You can use modal with typescript
+
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { ModalContext, ModalRootProvider, Modal } from 'context-react-modal'
+
+const App = () => {
+  const { showModal } = React.useContext(ModalContext)
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          showModal(params => (
+            <Modal
+              animationName='swing'
+              condition={() => (10 > 20 ? true : false)}
+              labelText='some label text'
+              labelComponent={Label}
+              closeTimeout={400}
+              cookie={{
+                name: 'modal_1',
+              }}
+              {...params}
+            >
+              Some modal
+            </Modal>
+          ))
+        }}
+      >
+        Try me!
+      </button>
+    </div>
+  )
+}
+
+const Label = ({ htmlFor, toogleCookie, ...params }) => {
+  return (
+    <div>
+      <input {...params} onChange={toogleCookie} type='checkbox' />
+      <label htmlFor={htmlFor}>do not show</label>
+    </div>
+  )
+}
+
+const rootElement = document.getElementById('root')
+ReactDOM.render(
+  <ModalRootProvider>
+    <App />
+  </ModalRootProvider>,
+  rootElement,
+)
+```
+
 ## API documentation
 
 |       Props        |                                  Type                                  | required |               examples                |              description               |
@@ -31,6 +88,8 @@ To install, you can use [npm](https://npmjs.org/):
 |  `cookie => name`  |                                 string                                 |   true   |                                       |                                        |
 | `cookie => maxAge` |                             number - `MS`                              |  false   |                                       |          cookie lifetime - ms          |
 |   `closeTimeout`   |                             number - `MS`                              |  false   |                                       | time to remove a component - ms (400)  |
+
+## API context
 
 |      Context      |                                         Type                                         |     description      |
 | :---------------: | :----------------------------------------------------------------------------------: | :------------------: |
