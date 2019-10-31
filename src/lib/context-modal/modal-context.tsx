@@ -7,6 +7,7 @@ const ModalContext = React.createContext<ContextModalType>({
   nodeList: [],
   currentNodeId: null,
   setCurrentNodeId: () => null,
+  setCloseTimeout: () => null,
 })
 
 type Props = {
@@ -20,6 +21,7 @@ const ModalProvider = ({ children }: Props) => {
     nodeList,
     currentNodeId,
     setCurrentNodeId,
+    setCloseTimeout,
   } = useStack()
 
   return (
@@ -30,6 +32,7 @@ const ModalProvider = ({ children }: Props) => {
         nodeList,
         currentNodeId,
         setCurrentNodeId,
+        setCloseTimeout,
       }}
     >
       {children}
@@ -40,33 +43,37 @@ const ModalProvider = ({ children }: Props) => {
 export { ModalProvider, ModalContext }
 
 export const useStack = () => {
+  const [closeTimeout, setCloseTimeout] = React.useState(400)
   const [nodeList, setNodeList] = useState<Array<CurrentModal>>([])
   const [currentNodeId, setCurrentNodeId] = React.useState<number | null>(null)
+  let id = 1
 
-  const nodeRemove = (id: number) => {
+  const nodeRemove = React.useCallback((id: number) => {
     setCurrentNodeId(id)
-
     const timerId = setTimeout(() => {
-      setNodeList((prev: Array<CurrentModal>) => {
-        return prev.filter(item => item.id !== id)
-      })
-    }, 400)
+      setNodeList((prev: Array<CurrentModal>) =>
+        prev.filter(item => item.id !== id),
+      )
+    }, closeTimeout)
 
     return () => clearTimeout(timerId)
-  }
+    /* eslint-disable-next-line*/
+  }, [])
 
-  const nodePush = (data: ReactNode | Array<ReactNode>) => {
-    if (typeof data === 'function') {
-      const id = Math.random()
-      setNodeList(prev => [...prev, { id, node: data }])
-    }
+  const nodePush = React.useCallback(
+    data => {
+      if (typeof data === 'function') {
+        setNodeList(prev => [...prev, { id: id++, node: data }])
+      }
 
-    if (Array.isArray(data)) {
-      data.map((node: ReactNode, index) => {
-        return setNodeList(prev => [...prev, { id: index, node }])
-      })
-    }
-  }
+      if (Array.isArray(data)) {
+        data.map((node, index) =>
+          setNodeList(prev => [...prev, { id: index, node }]),
+        )
+      }
+    },
+    [id],
+  )
 
   return {
     nodePush,
@@ -74,5 +81,6 @@ export const useStack = () => {
     nodeList,
     currentNodeId,
     setCurrentNodeId,
+    setCloseTimeout,
   }
 }

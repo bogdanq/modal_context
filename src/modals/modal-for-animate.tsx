@@ -79,9 +79,7 @@ export const ModalForCustomAnimate = ({
     <>
       <Modal
         type={type}
-        customAnimation={
-          customAnimationName && animationCustomStyle[customAnimationName]
-        }
+        customAnimation={animationCustomStyle[customAnimationName]}
         {...params}
       >
         {({ closeModal }) => (

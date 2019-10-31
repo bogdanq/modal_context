@@ -18,18 +18,27 @@ export const Modal = ({
   labelText,
   labelComponent,
   style,
+  closeTimeout,
   ...rest
 }: ModalWrapperProps) => {
-  const { nodeList, currentNodeId, hideModal } = React.useContext<
-    ContextModalType
-  >(ModalContext)
+  const {
+    nodeList,
+    currentNodeId,
+    hideModal,
+    setCloseTimeout,
+  } = React.useContext<ContextModalType>(ModalContext)
+
+  React.useEffect(() => {
+    setCloseTimeout(closeTimeout ? closeTimeout : 400)
+  }, [closeTimeout, setCloseTimeout])
 
   const [cookies] = useCookies()
 
-  const isFindCookieName = React.useMemo(() => getCookieName(cookies, cookie), [
-    cookies,
-    cookie,
-  ])
+  const isFindCookieName = React.useMemo(
+    () => getCookieName(cookies, cookie),
+    /* eslint-disable-next-line*/
+    [cookie],
+  )
 
   const findId = React.useMemo(
     () => nodeList.findIndex(item => item.id === id),
@@ -48,10 +57,12 @@ export const Modal = ({
           onClick={() => hideModal(id)}
           cookie={cookie}
           id={id}
+          className='modal-portal'
         >
           <StyledWrapper>
             <ModalInner
               {...rest}
+              closeTimeout={closeTimeout}
               customStyle={style}
               isAnimated={findId !== findCurrentNodeId}
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
@@ -115,10 +126,8 @@ export const ModalPortal = ({
   isFindCookieName: boolean
   condition?: () => boolean
 }) => {
-  const rootElement = document.querySelector('#modal')
-
-  if (rootElement && isFindCookieName && condition()) {
-    return ReactDOM.createPortal(children, rootElement)
+  if (isFindCookieName && condition()) {
+    return ReactDOM.createPortal(children, document.body)
   }
 
   return null

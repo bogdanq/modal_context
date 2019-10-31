@@ -20,36 +20,29 @@ export const GlobalModalStyle = () => {
 
 export const animationStyle = {
   scale: css<GlobalModalStyleProps>`
-    animation-duration: 0.5s;
     animation-name: ${({ isAnimated }) => (isAnimated ? scaleIn : scaleOut)};
   `,
   translate: css<GlobalModalStyleProps>`
-    animation-duration: 0.5s;
     animation-name: ${({ isAnimated }: any) =>
       isAnimated ? translateIn : translateOut};
   `,
   rotate: css<GlobalModalStyleProps>`
-    animation-duration: 0.5s;
     animation-name: ${({ isAnimated }: any) =>
       isAnimated ? rotateIn : rotateOut};
   `,
   jackIn: css<GlobalModalStyleProps>`
-    animation-duration: 0.5s;
     animation-name: ${({ isAnimated }: any) =>
       isAnimated ? jackIn : scaleOut};
   `,
   rubber: css<GlobalModalStyleProps>`
-    animation-duration: 0.5s;
     animation-name: ${({ isAnimated }: any) =>
       isAnimated ? rubberIn : scaleOut};
   `,
   swing: css<GlobalModalStyleProps>`
-    animation-duration: 0.5s;
     animation-name: ${({ isAnimated }: any) =>
       isAnimated ? swingIn : scaleOut};
   `,
   rollin: css<GlobalModalStyleProps>`
-    animation-duration: 0.5s;
     animation-name: ${({ isAnimated }: any) =>
       isAnimated ? rollinIn : scaleOut};
   `,

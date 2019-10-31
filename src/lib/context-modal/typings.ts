@@ -2,15 +2,16 @@ import React, { Dispatch } from 'react'
 import {
   FlattenSimpleInterpolation,
   FlattenInterpolation,
+  ThemedStyledProps,
 } from 'styled-components'
 
-export declare type ModalType = {
+export type ModalType = {
   danger: FlattenInterpolation<any>
   success: FlattenInterpolation<any>
   primary: FlattenInterpolation<any>
 }
 
-export declare type AnimationType = {
+export type AnimationType = {
   scale: FlattenInterpolation<any>
   translate: FlattenInterpolation<any>
   rotate: FlattenInterpolation<any>
@@ -29,15 +30,19 @@ export type Animation =
   | 'swing'
   | 'rollin'
 
-interface ModalWrapperProps extends Params {
-  children: (args: { closeModal: () => void }) => React.ReactNode
+type CustomAnimationType = FlattenInterpolation<
+  ThemedStyledProps<{ isAnimated?: boolean }, any>
+>
+
+export interface ModalWrapperProps extends Params {
+  children: (props: { closeModal: () => void }) => React.ReactNode
   type?: keyof ModalType
   customTypeStyles?: ModalType
   style?: FlattenSimpleInterpolation
   animationName?: Animation
-  customAnimation?: any
+  customAnimation?: CustomAnimationType
   labelText?: string
-  labelComponent?: (params: CustomLabelProps) => React.ReactNode
+  labelComponent?: (props: CustomLabelProps) => React.ReactNode
 }
 
 export type GlobalModalStyleProps = {
@@ -46,13 +51,14 @@ export type GlobalModalStyleProps = {
   customAnimation?: FlattenSimpleInterpolation
 }
 
-type ModalInnerProps = {
+export type ModalInnerProps = {
   type?: keyof ModalType
   customTypeStyles?: ModalType
   customStyle?: FlattenSimpleInterpolation
   isAnimated?: boolean
-  animationName?: string
-  customAnimation?: FlattenSimpleInterpolation
+  animationName?: Animation
+  customAnimation?: CustomAnimationType
+  closeTimeout?: number
 }
 
 export type Params = {
@@ -65,9 +71,11 @@ export type Params = {
   }
   type?: keyof ModalType
   animationName?: Animation
+  customAnimationName?: string
+  closeTimeout?: number
 }
 
-export type RenderNodeModal = (arg: { id: number }) => React.ReactNode
+export type RenderNodeModal = (props: { id: number }) => React.ReactNode
 export type ShowModal = <T extends RenderNodeModal | Array<RenderNodeModal>>(
   renderNodeModal: T,
 ) => void
@@ -75,12 +83,16 @@ export type ShowModal = <T extends RenderNodeModal | Array<RenderNodeModal>>(
 export type ContextModalType = {
   showModal: ShowModal
   hideModal: (id: number) => void
-  nodeList: Array<any>
+  nodeList: Array<CurrentModal>
   currentNodeId: number | null
   setCurrentNodeId: Dispatch<any>
+  setCloseTimeout: Dispatch<any>
 }
 
-export type CurrentModal = { id: number; node: React.ReactNode }
+export type CurrentModal = {
+  id: number
+  node: (props: { id: number; key: number }) => React.ReactNode
+}
 
 export type CustomLabelProps = {
   toogleCookie:
@@ -96,7 +108,7 @@ export type Cookie = {
   maxAge?: number
 }
 
-type LabelProps = {
+export type LabelProps = {
   labelText?: string
   toogleCookie: (cookie: Cookie) => void
   cookie: Cookie

@@ -46,7 +46,8 @@ export const ModalInner = styled.div<ModalInnerProps>`
   line-height: 1.5rem;
   font-size: 1rem;
   margin: 0 auto;
-  animation-duration: 0.5s;
+  animation-duration: ${({ closeTimeout }) =>
+    closeTimeout ? `${closeTimeout / 1000}s` : '0.4s'};
   animation-name: ${({ isAnimated }) =>
     isAnimated ? translateIn : translateOut};
   ${({ customStyle }) => customStyle}

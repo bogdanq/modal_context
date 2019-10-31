@@ -1,6 +1,6 @@
 {
   "name": "context-react-modal",
-  "version": "1.0.9",
+  "version": "1.2.2",
   "description": "Wrapper for context modals",
   "main": "dist/index.js",
   "keywords": [
@@ -28,13 +28,13 @@
     "build:ts": "tsc"
   },
   "dependencies": {
-    "@types/styled-components": "4.1.18",
-    "react-cookie": "4.0.1",
+    "react-cookie": "^4.0.1",
     "styled-components": "4.3.2"
   },
   "devDependencies": {
     "@types/node": "12.11.7",
     "@types/react-dom": "16.9.3",
+    "@types/styled-components": "^4.1.20",
     "parcel-bundler": "1.12.4",
     "react": "16.11.0",
     "react-dom": "16.11.0",
