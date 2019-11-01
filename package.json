@@ -20,12 +20,8 @@
   "bugs": "https://github.com/bogdanq/modal_context/issues",
   "homepage": "https://github.com/bogdanq/modal_context",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
     "demo": "parcel --out-dir demo/dist demo/index.html",
-    "build:ts": "tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "react-cookie": "^4.0.1",
