@@ -53,5 +53,8 @@ export const ModalInner = styled.div<ModalInnerProps>`
   ${({ customStyle }) => customStyle}
   ${getStyle('type', modalType)}
   ${getStyle('animationName', animationStyle)}
-  ${({ customAnimation }) => customAnimation}
+  ${({ customAnimation }) =>
+    css`
+      ${customAnimation}
+    `}
 `
